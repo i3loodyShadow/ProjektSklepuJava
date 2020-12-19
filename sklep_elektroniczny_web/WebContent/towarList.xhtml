@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<meta charset="utf-8"/>
 	<title>Sklep elektroniczny</title>
 </h:head>
-<h:body style="background-color: #eee; margin: 0.5em;">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="pageContent">
 
 	<p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true"
 		style="margin-bottom: 1em;">
@@ -61,6 +64,6 @@
 
 		</p:dataTable>
 	</h:form>
-
-</h:body>
+	</ui:define>
+</ui:composition>	
 </html>
