@@ -9,7 +9,10 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.servlet.http.HttpSession;
+
 import com.sklep.dao.TowarDAO;
 import com.sklep.entities.Towar;
 
@@ -30,12 +33,12 @@ public class TowarListBB {
 	@EJB
 	TowarDAO towarDAO;
 		
-	public String getSurname() {
+	public String getProducent() {
 		return producent;
 	}
 
-	public void setSurname(String surname) {
-		this.producent = surname;
+	public void setProducent(String producent) {
+		this.producent = producent;
 	}
 
 	public List<Towar> getFullList(){
@@ -63,7 +66,7 @@ public class TowarListBB {
 		
 		//1. Pass object through session
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
+		//session.setAttribute("towar", towar);
 		
 		//2. Pass object through flash	
 		flash.put("towar", towar);
@@ -74,7 +77,7 @@ public class TowarListBB {
 	public String editTowar(Towar towar){
 		//1. Pass object through session
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
+		//session.setAttribute("towar", towar);
 		
 		//2. Pass object through flash 
 		flash.put("towar", towar);
@@ -83,7 +86,7 @@ public class TowarListBB {
 	}
 
 	public String deleteTowar(Towar towar){
-		towarDAO.delete(towar);
+		towarDAO.remove(towar);
 		return PAGE_STAY_AT_THE_SAME;
 	}
 }

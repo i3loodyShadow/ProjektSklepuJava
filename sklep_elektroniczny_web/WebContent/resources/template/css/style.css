@@ -1,8 +1,23 @@
 body{
 	font-family: 'Century Gothic',helvetica,verdana,arial;
-	background: url("../img/main.jpg.jsf?ln=template") no-repeat center center fixed;
+	background: url("#{resource['template:img/bg.jpg']}") no-repeat center center fixed;
 	background-size: cover;
 	margin:0;
+}
+
+.pageName{
+	
+    border: 3px solid white;
+    min-height: 3em;
+}
+
+.pName{
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    font-family: verdana;
+    color: #3399FF;
+    text-shadow: 0.4em 0.4em 0.5em black;
 }
 
 .bottom-space{
