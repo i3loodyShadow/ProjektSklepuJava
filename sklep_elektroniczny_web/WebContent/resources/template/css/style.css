@@ -9,6 +9,8 @@ body{
 	
     border: 3px solid white;
     min-height: 3em;
+    margin-left: 5em;
+    margin-right: 5em;
 }
 
 .pName{
@@ -18,6 +20,12 @@ body{
     font-family: verdana;
     color: #3399FF;
     text-shadow: 0.4em 0.4em 0.5em black;
+}
+
+.center{
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
 }
 
 .bottom-space{

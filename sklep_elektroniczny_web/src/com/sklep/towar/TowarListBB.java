@@ -9,10 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.servlet.http.HttpSession;
-
 import com.sklep.dao.TowarDAO;
 import com.sklep.entities.Towar;
 

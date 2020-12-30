@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="pageContent">
+
+		<p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true">
+		
+		<h:form>
+		
+			<h:panelGrid columns="2" cellpadding="5">
+			
+				<h:outputLabel 
+							value="producent:" />
+				<p:inputText value="#{personListBB.surname}" />
+				<p:commandButton value="Szukaj" update="form-table" />
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+	<p:messages />
+
+	<h:form id="form-table" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{towarListBB.list}" var="t">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="producent" />
+				</f:facet>
+				<h:outputText value="#{t.producent}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="model" />
+				</f:facet>
+				<h:outputText value="#{t.model}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="opcje" />
+				</f:facet>
+
+				<p:commandButton style="margin:5px;" value="Szczegóły"
+					action="#{towarListBB.editTowar(t)}" />
+
+				<p:commandButton value="Dodaj do koszyka"
+					action="#{towarListBB.deleteTowar(t)}" update="@form" />
+
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	</ui:define>
+	
+</ui:composition>	
+</html>

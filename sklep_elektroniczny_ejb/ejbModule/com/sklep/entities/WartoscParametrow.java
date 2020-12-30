@@ -14,32 +14,31 @@ import javax.persistence.*;
 public class WartoscParametrow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idwartosc_parametrow")
-	private int idwartoscParametrow;
+	@EmbeddedId
+	private WartoscParametrowPK id;
 
 	@Column(name="wartosc_parametrow")
 	private String wartoscParametrow;
 
 	//bi-directional many-to-one association to NazwaParametrow
 	@ManyToOne
-	@JoinColumn(name="nazwa_parametrow_idnazwa_parametrow")
+	@JoinColumn(name="id_nazwa_parametrow")
 	private NazwaParametrow nazwaParametrow;
 
 	//bi-directional many-to-one association to Towar
 	@ManyToOne
+	@JoinColumn(name="id_towar")
 	private Towar towar;
 
 	public WartoscParametrow() {
 	}
 
-	public int getIdwartoscParametrow() {
-		return this.idwartoscParametrow;
+	public WartoscParametrowPK getId() {
+		return this.id;
 	}
 
-	public void setIdwartoscParametrow(int idwartoscParametrow) {
-		this.idwartoscParametrow = idwartoscParametrow;
+	public void setId(WartoscParametrowPK id) {
+		this.id = id;
 	}
 
 	public String getWartoscParametrow() {
