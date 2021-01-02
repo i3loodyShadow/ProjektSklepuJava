@@ -2,7 +2,6 @@ package com.sklep.login;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,9 +11,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.jsfcourse.db.UserDAO;
-import com.jsfcourse.entities.User;
 import com.sklep.dao.KontoDAO;
+import com.sklep.entities.Konto;
 
 @Named
 @RequestScoped
@@ -24,7 +22,7 @@ public class LoginBB {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String login;
-	private String pass;
+	private String haslo;
 
 	public String getLogin() {
 		return login;
@@ -34,36 +32,36 @@ public class LoginBB {
 		this.login = login;
 	}
 
-	public String getPass() {
-		return pass;
+	public String getHaslo() {
+		return haslo;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPass(String haslo) {
+		this.haslo = haslo;
 	}
 
-	@EJB
-	KontoDAO userDAO;
+	@Inject
+	KontoDAO kontoDAO;
 
 	public String doLogin() {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
 		// 1. verify login and password - get User from "database"
-		User user = userDAO.getUserFromDatabase(login, pass);
+		Konto konto = kontoDAO.getUser(login, haslo);
 
 		// 2. if bad login or password - stay with error info
-		if (user == null) {
+		if (konto == null) {
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Niepoprawny login lub has≈Ço", null));
+					"Niepoprawny login lub has≥o", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
 
 		// 3. if logged in: get User roles, save in RemoteClient and store it in session
 		
-		RemoteClient<User> client = new RemoteClient<User>(); //create new RemoteClient
-		client.setDetails(user);
+		RemoteClient<Konto> client = new RemoteClient<Konto>(); //create new RemoteClient
+		client.setDetails(konto);
 		
-		List<String> roles = userDAO.getUserRolesFromDatabase(user); //get User roles 
+		List<String> roles = kontoDAO.getUserRoles(konto); //get User roles 
 		
 		if (roles != null) { //save roles in RemoteClient
 			for (String role: roles) {
