@@ -22,12 +22,12 @@ public class WartoscParametrow implements Serializable {
 
 	//bi-directional many-to-one association to NazwaParametrow
 	@ManyToOne
-	@JoinColumn(name="id_nazwa_parametrow")
+	@JoinColumn(name="id_nazwa_parametrow", insertable = false, updatable = false)
 	private NazwaParametrow nazwaParametrow;
 
 	//bi-directional many-to-one association to Towar
 	@ManyToOne
-	@JoinColumn(name="id_towar")
+	@JoinColumn(name="id_towar", insertable = false, updatable = false)
 	private Towar towar;
 
 	public WartoscParametrow() {
