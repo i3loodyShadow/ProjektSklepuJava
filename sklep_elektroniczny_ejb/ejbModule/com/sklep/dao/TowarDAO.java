@@ -55,10 +55,10 @@ public class TowarDAO {
 		List<Towar> list = null;
 
 		// 1. Build query string with parameters
-		String select = "select t ";
-		String from = "from Towar t ";
+		String select = "select p ";
+		String from = "from Towar p ";
 		String where = "";
-		String orderby = "order by t.idtowar asc, t.producent";
+		String orderby = "order by p.idtowar asc, p.producent";
 
 		// search for producent
 		String producent = (String) searchParams.get("producent");
