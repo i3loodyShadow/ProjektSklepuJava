@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="content">
+		
+		<h:form>
+ 
+    		<p:panel id="basic" header="Logowanie" style="margin-bottom:20px">
+       			<h:panelGrid columns="2" cellpadding="10">
+            		<h:outputLabel for="login" value="login:" />
+					<h:inputText id="login" value="#{loginBB.login}"
+						required="true"	requiredMessage="podaj login"/>
+					<h:outputLabel for="haslo" value="hasło:" />
+					<h:inputSecret id="haslo" value="#{loginBB.haslo}"
+						required="true"	requiredMessage="podaj hasło"/>
+        		</h:panelGrid>
+        
+        		<p:messages id="mess" showDetail="true" closable="true">
+        			<p:autoUpdate/>
+    			</p:messages>
+		
+				<p:commandButton value="Zaloguj" icon="pi pi-angle-double-right" action="#{loginBB.doLogin()}" update="mess" />
+			
+    		</p:panel>
+		
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>
+</html>
