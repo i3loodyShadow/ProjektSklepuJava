@@ -17,6 +17,8 @@ import com.sklep.entities.Towar;
 @RequestScoped
 public class TowarListBB {
 	private static final String PAGE_PERSON_EDIT = "personEdit?faces-redirect=true";
+	private static final String PAGE_SHOP = "/public/towarList?faces-redirect=true";
+	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String producent;
@@ -57,6 +59,11 @@ public class TowarListBB {
 		
 		return list;
 	}
+	
+	public String login() {
+		
+		return PAGE_LOGIN;
+	}
 
 	public String newTowar(){
 		Towar towar = new Towar();
@@ -85,5 +92,9 @@ public class TowarListBB {
 	public String deleteTowar(Towar towar){
 		towarDAO.remove(towar);
 		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String doSklepu() {
+		return PAGE_SHOP;
 	}
 }
