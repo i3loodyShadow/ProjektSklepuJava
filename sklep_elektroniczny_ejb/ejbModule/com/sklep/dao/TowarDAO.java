@@ -16,9 +16,10 @@ import com.sklep.entities.Towar;
 
 @Stateless
 public class TowarDAO {
-	
+	private final static String UNIT_NAME = "sklep-simplePU";
+
 	// Dependency injection (no setter method is needed)
-	@PersistenceContext
+	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
 	
 	public void create(Towar towar) {
@@ -83,7 +84,7 @@ public class TowarDAO {
 
 		// ... other parameters ... 
 
-		// 4. Execute query and retrieve list of Person objects
+		// 4. Execute query and retrieve list of Towar objects
 		try {
 			list = query.getResultList();
 		} catch (Exception e) {
