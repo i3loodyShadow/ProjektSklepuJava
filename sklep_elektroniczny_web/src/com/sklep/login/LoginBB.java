@@ -2,6 +2,7 @@ package com.sklep.login;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -17,7 +18,7 @@ import com.sklep.entities.Konto;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_MAIN = "/pages/calc/calc?faces-redirect=true";
+	private static final String PAGE_MAIN = "/public/szczegTowaru?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/pages/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
@@ -36,11 +37,11 @@ public class LoginBB {
 		return haslo;
 	}
 
-	public void setPass(String haslo) {
+	public void setHaslo(String haslo) {
 		this.haslo = haslo;
 	}
 
-	@Inject
+	@EJB
 	KontoDAO kontoDAO;
 
 	public String doLogin() {
