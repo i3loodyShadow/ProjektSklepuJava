@@ -2,14 +2,13 @@ package com.sklep.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sklep.entities.Konto;
+import com.sklep.entities.Rola;
 
 @Stateless
 public class KontoDAO {	
@@ -35,82 +34,39 @@ public class KontoDAO {
 		return em.find(Konto.class, id);
 	}
 	
-	
-/*	public List<Konto> getList(Map<String, Object> searchParams) {
-		List<Konto> list = null;
-
-		// 1. Build query string with parameters
-		String select = "select Idkonto k";
-		String from = "from Konto k ";
-		String where = "";
-
-		// search for producent
-		String loginQuerry = (String) searchParams.get("login");
-		if (loginQuerry != null) {
-			if (where.isEmpty()) {
-				where = "where ";
-			} else {
-				where += "and ";
-			}
-			where += "p.producent like :producent ";
-		}
-
-		// 2. Create query object
-		Query query = em.createQuery(select + from + where);
-
-		// 3. Set configured parameters
-		if (loginQuerry != null) {
-			query.setParameter("login", loginQuerry);
-		}
-
-		// 4. Execute query and retrieve list of Konto objects
+	public Konto getKonto (String login, String haslo) {
+		
 		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-	*/
-	// simulate finding user in DB
-	public Konto getUser(String login, String haslo) {
 		
-		Konto u = null;
+			Query query = em.createQuery("from Konto k where k.login=:login and k.haslo=:haslo");
 		
-		Konto t = new Konto();
-			t.setLogin(login);
-			t.getIdkonto();
+			query.setParameter("login",login);
+			query.setParameter("haslo", haslo);
 		
-
-		if (login.equals("user1") && haslo.equals("password")) {
-			u = new Konto();
-			u.setLogin(login);
-			u.setHaslo(haslo);
+			Konto k = (Konto)query.getSingleResult();
+	
+			return k;
+		} catch (javax.persistence.NoResultException e) {
+			Konto k = null;
+				
+			return k;
 		}
-
-		if (login.equals("user2") && haslo.equals("password")) {
-			u = new Konto();
-			u.setLogin(login);
-			u.setHaslo(haslo);
-
-		}
-
-		return u;
 	}
 
 	// simulate retrieving roles of a User from DB
-	public List<String> getUserRoles(Konto konto) {
+	public List<String> getKontoRole(Konto konto) {
 		
-		ArrayList<String> roles = new ArrayList<String>();
+		ArrayList<String> role = new ArrayList<String>();
 		
-		if (konto.getLogin().equals("user1")) {
-			roles.add("user");
+		Integer rolaI = konto.getRola().getIdrola();
+		
+		if (rolaI == 1) {
+			role.add("admin");
 		}
-		if (konto.getLogin().equals("user3")) {
-			roles.add("admin");
+		if (rolaI == 2) {
+			role.add("user");
 		}
 		
-		return roles;	
+		return role;	
 	}
 }
