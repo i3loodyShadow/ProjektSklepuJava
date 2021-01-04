@@ -21,7 +21,7 @@
             
       		<p:commandButton style="margin:5px;" value="Zaloguj" action="#{towarListBB.login()}" icon="pi pi-angle-double-right"/>
       		
-      		<p:commandButton value="Wyloguj" icon="pi pi-angle-double-left"/>
+      		<p:commandButton value="Wyloguj" action="#{loginBB.doLogout()}" icon="pi pi-angle-double-left"/>
         </f:facet>
     </p:menubar>
 </h:form>
