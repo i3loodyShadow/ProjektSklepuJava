@@ -18,8 +18,8 @@ import com.sklep.entities.Konto;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_MAIN = "/public/szczegTowaru?faces-redirect=true";
-	private static final String PAGE_LOGIN = "/pages/login";
+	private static final String PAGE_MAIN = "/pages/admin/szczegTowaru?faces-redirect=true";
+	private static final String PAGE_LOGIN = "/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String login;
@@ -48,7 +48,7 @@ public class LoginBB {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
 		// 1. verify login and password - get User from "database"
-		Konto konto = kontoDAO.getUser(login, haslo);
+		Konto konto = kontoDAO.getKonto(login, haslo);
 
 		// 2. if bad login or password - stay with error info
 		if (konto == null) {
@@ -62,7 +62,7 @@ public class LoginBB {
 		RemoteClient<Konto> client = new RemoteClient<Konto>(); //create new RemoteClient
 		client.setDetails(konto);
 		
-		List<String> roles = kontoDAO.getUserRoles(konto); //get User roles 
+		List<String> roles = kontoDAO.getKontoRole(konto); //get User roles 
 		
 		if (roles != null) { //save roles in RemoteClient
 			for (String role: roles) {
