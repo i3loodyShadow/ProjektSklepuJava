@@ -7,7 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.simplesecurity.RemoteClient;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,7 +46,7 @@ public class LoginBB {
 	public String doLogin() {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
-		// 1. verify login and password - get User from "database"
+		// 1. verify login and password - get User from database
 		Konto konto = kontoDAO.getKonto(login, haslo);
 
 		// 2. if bad login or password - stay with error info
