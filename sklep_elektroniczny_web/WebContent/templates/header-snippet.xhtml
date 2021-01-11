@@ -15,13 +15,17 @@
         <p:menuitem value="Dlaczego my?" url="http://www.primefaces.org" icon="pi pi-question" />
  
         <f:facet name="options">
+        
         	<p:commandButton style="margin:5px;" value="Do sklepu" action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
         
-            <p:commandButton value="Zarejestuj" icon="pi pi-user-plus"/>
+            <p:commandButton id="Rejestracja" value="Zarejestuj" 
+            	action="#{rejestracjaBB.doRejestracji()}" icon="pi pi-user-plus"/>
             
-      		<p:commandButton style="margin:5px;" value="Zaloguj" action="#{towarListBB.login()}" icon="pi pi-angle-double-right"/>
+      		<p:commandButton id="Logowanie" rendered = "#{true}" value="Zaloguj" 
+      			action="#{towarListBB.login()}"  icon="pi pi-angle-double-right" style="margin:5px;"/>
       		
-      		<p:commandButton value="Wyloguj" action="#{loginBB.doLogout()}" icon="pi pi-angle-double-left"/>
+      		<p:commandButton id="Wylogowanie" rendered = "#{true}" value="Wyloguj" 
+      			action="#{loginBB.doLogout()}"  icon="pi pi-angle-double-left"/>
         </f:facet>
     </p:menubar>
 </h:form>
