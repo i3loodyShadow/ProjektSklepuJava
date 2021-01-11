@@ -14,27 +14,26 @@ import com.sklep.entities.Rola;
 public class KontoDAO {	
 	private final static String UNIT_NAME = "sklep-simplePU";
 
-	// Dependency injection (no setter method is needed)
 	@PersistenceContext(unitName = UNIT_NAME)
 	EntityManager em;
 	
-	public void insert(Konto konto) {
+	public void create(Konto konto) {
 		em.persist(konto);
 	}
 
-	public Konto update(Konto konto) {
+	public Konto merge(Konto konto) {
 		return em.merge(konto);
 	}
 
-	public void delete(Konto konto) {
+	public void remove(Konto konto) {
 		em.remove(em.merge(konto));
 	}
 
-	public Konto get(Object id) {
+	public Konto find(Object id) {
 		return em.find(Konto.class, id);
 	}
 	
-	public Konto getKonto (String login, String haslo) {
+	public Konto getKonto(String login, String haslo) {
 		
 		try {
 		
@@ -53,7 +52,6 @@ public class KontoDAO {
 		}
 	}
 
-	// simulate retrieving roles of a User from DB
 	public List<String> getKontoRole(Konto konto) {
 		
 		ArrayList<String> role = new ArrayList<String>();
@@ -68,5 +66,50 @@ public class KontoDAO {
 		}
 		
 		return role;	
+	}
+	
+	public Konto isUserUnique(String login) {
+		
+		try {
+			
+			Query query = em.createQuery("from Konto k where k.login=:login");
+			
+			query.setParameter("login", login);
+			
+			Konto k = (Konto)query.getSingleResult();
+			
+			return k;
+		} catch (javax.persistence.NoResultException e) {
+			Konto k = null;
+			
+			return k;
+		}
+		
+	}
+	
+	public boolean createKonto(String email, String login, String haslo) {
+		
+		boolean success;
+		
+		try {
+			Konto k = new Konto();
+			Rola r = new Rola();
+		
+			r.setIdrola(2);
+			r.setNazwaRoli("user");
+			
+			k.setEmail(email);
+			k.setLogin(login);
+			k.setHaslo(haslo);
+			k.setRola(r);
+			
+			create(k);
+			
+			success = true;
+			return success;
+		} catch (Exception e){
+			success = false;
+			return success;
+		}
 	}
 }
