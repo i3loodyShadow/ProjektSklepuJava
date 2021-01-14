@@ -17,7 +17,8 @@ import com.sklep.entities.Konto;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_MAIN = "/pages/admin/szczegTowaru?faces-redirect=true";
+	private static final String PAGE_ADMIN = "/pages/admin/stronaAdmina?faces-redirect=true";
+	private static final String PAGE_USER = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
@@ -74,7 +75,11 @@ public class LoginBB {
 		client.store(request);
 
 		// and enter the system (now SecurityFilter will pass the request)
-		return PAGE_MAIN;
+		if (roles.get(0) == "admin") {
+			return PAGE_ADMIN;
+		}
+		
+		return PAGE_USER;
 	}
 	
 	public String doLogout(){
