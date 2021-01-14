@@ -16,10 +16,9 @@ import com.sklep.entities.Towar;
 @Named
 @RequestScoped
 public class TowarListBB {
-	private static final String PAGE_PERSON_EDIT = "personEdit?faces-redirect=true";
+	private static final String PAGE_SZCZEG = "/public/szczegTowaru?faces-redirect=true";
 	private static final String PAGE_SHOP = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
-	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String producent;
 		
@@ -65,19 +64,6 @@ public class TowarListBB {
 		return PAGE_LOGIN;
 	}
 
-	public String newTowar(){
-		Towar towar = new Towar();
-		
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("towar", towar);
-		
-		//2. Pass object through flash	
-		flash.put("towar", towar);
-		
-		return PAGE_PERSON_EDIT;
-	}
-
 	public String editTowar(Towar towar){
 		//1. Pass object through session
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
@@ -86,12 +72,7 @@ public class TowarListBB {
 		//2. Pass object through flash 
 		flash.put("towar", towar);
 		
-		return PAGE_PERSON_EDIT;
-	}
-
-	public String deleteTowar(Towar towar){
-		towarDAO.remove(towar);
-		return PAGE_STAY_AT_THE_SAME;
+		return PAGE_SZCZEG;
 	}
 	
 	public String doSklepu() {
