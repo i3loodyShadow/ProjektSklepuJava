@@ -93,4 +93,24 @@ public class TowarDAO {
 
 		return list;
 	}
+	
+	public int getIdGT(int idTow) {
+		
+		int idTowar;
+		
+		try {
+			
+			Query query = em.createQuery("select id_grupy_towarow t from Towar t where t.idtowar=:idTowar");
+		
+			query.setParameter("idTowar",idTow);
+			
+			idTowar = (int)query.getSingleResult();
+		
+			return idTowar;
+		} catch (javax.persistence.NoResultException e) {
+			idTowar = 0;
+			
+			return idTowar;
+		}
+	}
 }
