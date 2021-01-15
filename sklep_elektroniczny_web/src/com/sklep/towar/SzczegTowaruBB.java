@@ -2,6 +2,7 @@ package com.sklep.towar;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -13,13 +14,10 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import com.sklep.dao.TowarDAO;
-import com.sklep.dao.NazwaParametrowDAO;
-import com.sklep.dao.WartoscParametrowDAO;
-
 import com.sklep.entities.Towar;
-import com.sklep.entities.NazwaParametrow;
-import com.sklep.entities.WartoscParametrow;
 
+@Named
+@ViewScoped
 public class SzczegTowaruBB implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -28,6 +26,7 @@ public class SzczegTowaruBB implements Serializable{
 	
 	private Towar towar = new Towar();
 	private Towar loaded = new Towar();
+	private List<Towar> list;
 	
 	@EJB
 	TowarDAO TowarDAO;
@@ -42,6 +41,14 @@ public class SzczegTowaruBB implements Serializable{
 		return towar;
 	}
 	
+	public List<Towar> getList() {
+		return list;
+	}
+
+	public void setList(List<Towar> list) {
+		this.list = list;
+	}
+	
 	public void onLoad() throws IOException{
 		
 		loaded = (Towar) flash.get("towar");
@@ -51,10 +58,8 @@ public class SzczegTowaruBB implements Serializable{
 		
 		int idTowaru = towar.getIdtowar();
 		
-		int idGrTow = TowarDAO.getIdGT(idTowaru);
-		
-		
-		
+		list = TowarDAO.getTowarDetails(idTowaru);
+				
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu!", null));
 		}
