@@ -7,8 +7,34 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	
 	
-	<ui:composition template="/templates/page-template.xhtml">
+<f:metadata>
+    <f:viewAction action="#{szczegTowaruBB.onLoad()}" />
+</f:metadata>
 	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+		<h:form id="form-table" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB.list}" var="t">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="producent" />
+				</f:facet>
+				<h:outputText value="#{t.nazwa_parametru}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="model" />
+				</f:facet>
+				<h:outputText value="#{t.wartosc_parametrow}" />
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		</ui:define>
 	
 	</ui:composition>
 	
