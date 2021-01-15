@@ -18,7 +18,7 @@
 			
 				<h:outputLabel 
 							value="producent:" />
-				<p:inputText value="#{personListBB.surname}" />
+				<p:inputText value="#{towarListBB.producent}" />
 				<p:commandButton value="Szukaj" update="form-table" />
 			</h:panelGrid>
 		</h:form>
@@ -50,7 +50,7 @@
 				</f:facet>
 
 				<p:commandButton style="margin:5px;" value="Szczegóły"
-					action="#{towarListBB.editTowar(t)}" />
+					action="#{towarListBB.szczegTowar(t)}" />
 
 				<p:commandButton value="Dodaj do koszyka"
 					action="#{towarListBB.deleteTowar(t)}" update="@form" />
