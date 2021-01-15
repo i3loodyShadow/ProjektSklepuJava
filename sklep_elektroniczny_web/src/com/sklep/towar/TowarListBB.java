@@ -64,7 +64,7 @@ public class TowarListBB {
 		return PAGE_LOGIN;
 	}
 
-	public String editTowar(Towar towar){
+	public String szczegTowar(Towar towar){
 		//1. Pass object through session
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
 		//session.setAttribute("towar", towar);
