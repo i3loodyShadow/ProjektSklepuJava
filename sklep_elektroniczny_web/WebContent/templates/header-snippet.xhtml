@@ -16,15 +16,16 @@
  
         <f:facet name="options">
         
-        	<p:commandButton style="margin:5px;" value="Do sklepu" action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
+        	<p:commandButton style="margin:5px;" value="Do sklepu" 
+        		action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
         
-            <p:commandButton id="Rejestracja" value="Zarejestuj" 
+            <p:commandButton id="Rejestracja" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zarejestuj" 
             	action="#{rejestracjaBB.doRejestracji()}" icon="pi pi-user-plus"/>
             
-      		<p:commandButton id="Logowanie" rendered = "#{true}" value="Zaloguj" 
+      		<p:commandButton id="Logowanie" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zaloguj" 
       			action="#{towarListBB.login()}"  icon="pi pi-angle-double-right" style="margin:5px;"/>
       		
-      		<p:commandButton id="Wylogowanie" rendered = "#{true}" value="Wyloguj" 
+      		<p:commandButton style="margin:5px;" id="Wylogowanie" rendered="#{remoteClient.isInRole('admin') or remoteClient.isInRole('user')}" value="Wyloguj" 
       			action="#{loginBB.doLogout()}"  icon="pi pi-angle-double-left"/>
         </f:facet>
     </p:menubar>
