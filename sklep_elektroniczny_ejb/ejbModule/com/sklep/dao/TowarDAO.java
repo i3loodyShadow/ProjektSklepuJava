@@ -94,28 +94,11 @@ public class TowarDAO {
 		return list;
 	}
 	
-	public List<Towar> getTowarDetails(int searchParam){
+	public Towar getTowarDetails(int idTowar){
 		
-		List<Towar> list = null;
-		String select = "select idtowar, wartosc_parametrow, nazwa_parametru ";
-		String from = "from Towar t ";
-		String join1 = "join t.wartoscParametrows w ";
-		String join2 = "join w.nazwaParametrow n ";
-		String where = "where idtowar like :idTowar ";
+		Towar t = em.find(Towar.class, idTowar);	
+		t.getWartoscParametrows().size();
 		
-		String idTow = Integer.toString(searchParam);
-		
-		Query query = em.createQuery(select + from + join1 + join2 + where);
-
-		
-		query.setParameter("idTowar", idTow);
-		
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
+		return t;
 	}
 }
