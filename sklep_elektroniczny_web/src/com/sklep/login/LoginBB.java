@@ -75,10 +75,7 @@ public class LoginBB {
 		client.store(request);
 
 		// and enter the system (now SecurityFilter will pass the request)
-		if (roles.get(0) == "admin") {
-			return PAGE_ADMIN;
-		}
-		
+
 		return PAGE_USER;
 	}
 	
