@@ -17,20 +17,20 @@
 		
 		<h:form id="form-table" style ="margin-left: 3.5em; margin-right: 3.5em;">
 
-		<p:dataTable value="#{szczegTowaruBB.list}" var="t">
+		<p:dataTable value="#{szczegTowaruBB.list}" var="w">
 
 			<p:column priority="5">
 				<f:facet name="header">
 					<h:outputText value="producent" />
 				</f:facet>
-				<h:outputText value="#{t.nazwa_parametru}" />
+				<h:outputText value="#{w.nazwaParametrow.nazwaParametru" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="model" />
 				</f:facet>
-				<h:outputText value="#{t.wartosc_parametrow}" />
+				<h:outputText value="#{w.wartoscParametrow}" />
 			</p:column>
 		</p:dataTable>
 		</h:form>
