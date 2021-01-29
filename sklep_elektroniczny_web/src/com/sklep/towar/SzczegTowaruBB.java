@@ -15,54 +15,57 @@ import javax.servlet.http.HttpSession;
 
 import com.sklep.dao.TowarDAO;
 import com.sklep.entities.Towar;
+import com.sklep.entities.WartoscParametrow;
 
 @Named
 @ViewScoped
-public class SzczegTowaruBB implements Serializable{
+public class SzczegTowaruBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_MAIN = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-	
+
 	private Towar towar = new Towar();
 	private Towar loaded = new Towar();
-	private List<Towar> list;
-	
+	private List<WartoscParametrow> list;
+
 	@EJB
 	TowarDAO TowarDAO;
-	
+
 	@Inject
 	FacesContext context;
 
 	@Inject
 	Flash flash;
-	
+
 	public Towar getTowar() {
 		return towar;
 	}
-	
-	public List<Towar> getList() {
+
+	public List<WartoscParametrow> getList() {
 		return list;
 	}
 
-	public void setList(List<Towar> list) {
+	public void setList(List<WartoscParametrow> list) {
 		this.list = list;
 	}
-	
-	public void onLoad() throws IOException{
-		
+
+	public void onLoad() throws IOException {
+
 		loaded = (Towar) flash.get("towar");
-	
-		if(loaded != null) {
-		towar = loaded;
-		
-		int idTowaru = towar.getIdtowar();
-		
-		list = TowarDAO.getTowarDetails(idTowaru);
-				
+
+		if (loaded != null) {
+			towar = loaded;
+
+			int idTowaru = towar.getIdtowar();
+
+			list = TowarDAO.getTowarDetails(idTowaru).getWartoscParametrows();
+			
+			//System.out.println(list);
+
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu!", null));
 		}
 	}
-	 
+
 }
