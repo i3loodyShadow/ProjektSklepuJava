@@ -44,16 +44,22 @@
 				<h:outputText value="#{t.model}" />
 			</p:column>
 
-			<p:column>
+			<p:column styleClass="centeredColumnContent">
 				<f:facet name="header">
 					<h:outputText value="opcje" />
 				</f:facet>
 
-				<p:commandButton style="margin:5px;" value="Szczegóły"
-					action="#{towarListBB.editTowar(t)}" />
+				<p:commandButton value="Szczegóły" 
+					action="#{towarListBB.szczegTowar(t)}" />
 
-				<p:commandButton value="Dodaj do koszyka"
-					action="#{towarListBB.deleteTowar(t)}" update="@form" />
+				<p:commandButton style="margin:5px;" value="Dodaj do koszyka"
+					action="#{towarListBB.deleteTowar(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+					
+				<p:commandButton style="margin:5px;" value="Edytuj"
+					action="#{towarListBB.deleteTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
+					
+				<p:commandButton value="Usuń"
+					action="#{towarListBB.deleteTowar(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
 
 			</p:column>
 
