@@ -2,21 +2,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 	
-	<p:tooltip />
- 
-<h:form>
-    <p:messages id="messages" showDetail="true" closable="true">
-        <p:autoUpdate />
-    </p:messages>
- 
-    <p:commandButton value="Info" action="#{messagesView.info}" />
-    <p:commandButton value="Warn" action="#{messagesView.warn}" />
-    <p:commandButton value="Error" action="#{messagesView.error}" />
-    <p:commandButton value="Fatal" action="#{messagesView.fatal}" />
-</h:form>
+	
+<f:metadata>
+    <f:viewAction action="#{szczegTowaruBB.onLoad()}" />
+</f:metadata>
+	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+		<h:form id="og-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB}">
+
+			<p:column priority="3">
+				<f:facet name="header">
+					<h:outputText value="producent" />
+				</f:facet>
+				<h:outputText value="#{szczegTowaruBB.towar.producent}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="model" />
+				</f:facet>
+				<h:outputText value="#{szczegTowaruBB.towar.model}" />
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		
+		<h:form id="szczeg-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB.list}" var="w">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="Nazwa Parametry" />
+				</f:facet>
+				<h:outputText value="#{w.nazwaParametrow.nazwaParametru}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Wartosci Parametrów" />
+				</f:facet>
+				<h:outputText value="#{w.wartoscParametrow}" />
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		</ui:define>
+	
+	</ui:composition>
 	
 </html>
