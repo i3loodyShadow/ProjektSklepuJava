@@ -40,3 +40,7 @@ body{
 	margin: 1em;
 	min-width: 700px;
 }
+
+td.centeredColumnContent{
+    text-align: center;
+}
