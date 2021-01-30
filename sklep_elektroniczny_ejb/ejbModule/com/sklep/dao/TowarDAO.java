@@ -93,4 +93,12 @@ public class TowarDAO {
 
 		return list;
 	}
+	
+	public Towar getTowarDetails(int idTowar){
+		
+		Towar t = em.find(Towar.class, idTowar);	
+		t.getWartoscParametrows().size();
+		
+		return t;
+	}
 }
