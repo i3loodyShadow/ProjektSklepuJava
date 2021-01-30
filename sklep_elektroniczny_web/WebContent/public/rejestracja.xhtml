@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+<ui:define name="pageContent">
+ 	
+	<h:form>
+	
+	<p:panel>
+    		<h:panelGrid id="grid" columns="3" cellpadding="8">
+    		
+        		<p:outputLabel for="email" value="E-mail:" />
+        		<p:inputText id="email" value="#{rejestracjaBB.email}" required="true" requiredMessage="Nie podano adresu E-mail!"/>
+        		<p:message for="email" />
+ 
+        		<p:outputLabel for="login" value="Login:" />
+        		<p:inputText id="login" value="#{rejestracjaBB.login}" required="true" requiredMessage="Nie podano adresu loginu!"/>
+        		<p:message for="login"/>
+ 	
+        		<p:outputLabel for="pwd1" value="Hasło:" />
+        		<p:password id="pwd1" value="#{rejestracjaBB.haslo}" required="true" requiredMessage="Nie podano hasła!" label="Password 1"
+        		match="pwd1" validatorMessage="Hasła nie są takie same"/>
+        		<p:message for="pwd1"/>
+ 
+        		<p:outputLabel for="pwd2" value="Powtórz hasło:" />
+        		<p:password id="pwd2" value="#{rejestracjaBB.haslo}" required="true" requiredMessage="Nie powtórzono hasła" label="Password 2"/>
+        		<p:message for="pwd2"/>
+        		
+        		<p:commandButton id="submitButton" value="Zarejestruj" action="#{rejestracjaBB.zarejestruj}" update="grid mess"/>
+        		
+    		</h:panelGrid>
+    		
+    		<p:messages id="mess" showDetail="true" closable="true">
+        		<p:autoUpdate/>
+    		</p:messages>
+ 
+    	</p:panel>		
+	</h:form>
+
+</ui:define>
+</ui:composition>
+</html>
