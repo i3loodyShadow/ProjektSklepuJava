@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import com.sklep.entities.TowarZamowienia;
 
 @Stateless
-
 public class TowarZamowieniaDAO {
+	private final static String UNIT_NAME = "sklep-simplePU";
 	
-	@PersistenceContext
-	EntityManager em;
+	@PersistenceContext(unitName = UNIT_NAME)
+	protected EntityManager em;
 	
 	public void insert(TowarZamowienia towarZamowienia) {
 		em.persist(towarZamowienia);
@@ -28,5 +28,16 @@ public class TowarZamowieniaDAO {
 	public TowarZamowienia get(Object id) {
 		return em.find(TowarZamowienia.class, id);
 	}
-
+	
+	public void createKoszyk(Integer cena, String producent, String model, int idZamowienie) {
+		
+		TowarZamowienia t = new TowarZamowienia();
+		
+		t.setIdtowarZamowienia(idZamowienie);
+		t.setProducent(producent);
+		t.setModel(model);
+		t.setCena(cena.toString());
+		
+		insert(t);
+	}
 }
