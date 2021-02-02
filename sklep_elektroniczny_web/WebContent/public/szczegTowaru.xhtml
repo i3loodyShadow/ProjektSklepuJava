@@ -15,20 +15,40 @@
 		
 		<ui:define name="pageContent">
 		
-		<h:form id="form-table" style ="margin-left: 3.5em; margin-right: 3.5em;">
+		<h:form id="og-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
 
-		<p:dataTable value="#{szczegTowaruBB.list}" var="w">
+		<p:dataTable value="#{szczegTowaruBB}">
 
-			<p:column priority="5">
+			<p:column priority="3">
 				<f:facet name="header">
 					<h:outputText value="producent" />
 				</f:facet>
-				<h:outputText value="#{w.nazwaParametrow.nazwaParametru" />
+				<h:outputText value="#{szczegTowaruBB.towar.producent}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="model" />
+				</f:facet>
+				<h:outputText value="#{szczegTowaruBB.towar.model}" />
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		
+		<h:form id="szczeg-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB.list}" var="w">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="Nazwa Parametry" />
+				</f:facet>
+				<h:outputText value="#{w.nazwaParametrow.nazwaParametru}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Wartosci Parametrów" />
 				</f:facet>
 				<h:outputText value="#{w.wartoscParametrow}" />
 			</p:column>
