@@ -79,10 +79,11 @@ public class LoginBB {
 		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
 		client.store(request);
 
-		// and enter the system (now SecurityFilter will pass the request)
+		if(konto.getIdkonto() != 0) {
+			flash.put("idKonto",konto.getIdkonto());
+		}
 		
-		int id = konto.getIdkonto();
-		flash.put("idKonto",id);
+		// and enter the system (now SecurityFilter will pass the request)
 		
 		return PAGE_USER;
 	}
