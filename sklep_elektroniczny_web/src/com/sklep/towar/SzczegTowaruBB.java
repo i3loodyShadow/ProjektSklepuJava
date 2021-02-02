@@ -27,6 +27,8 @@ public class SzczegTowaruBB implements Serializable {
 
 	private Towar towar = new Towar();
 	private Towar loaded = new Towar();
+	private String prod;
+	private String mod;
 	private List<WartoscParametrow> list;
 
 	@EJB
@@ -40,6 +42,22 @@ public class SzczegTowaruBB implements Serializable {
 
 	public Towar getTowar() {
 		return towar;
+	}
+	
+	public String getProd() {
+		return prod;
+	}
+
+	public void setProd(String prod) {
+		this.prod = prod;
+	}
+
+	public String getMod() {
+		return mod;
+	}
+
+	public void setMod(String mod) {
+		this.mod = mod;
 	}
 
 	public List<WartoscParametrow> getList() {
@@ -58,7 +76,11 @@ public class SzczegTowaruBB implements Serializable {
 			towar = loaded;
 
 			int idTowaru = towar.getIdtowar();
-
+			
+			setProd(towar.getProducent());
+			
+			setMod(towar.getModel());
+			
 			list = TowarDAO.getTowarDetails(idTowaru).getWartoscParametrows();
 			
 			//System.out.println(list);
