@@ -15,10 +15,10 @@ public class WartoscParametrowPK implements Serializable {
 	@Column(name="idwartosc_parametrow")
 	private int idwartoscParametrow;
 
-	@Column(name="id_towar", insertable=false, updatable=false)
+	@Column(name="towar_idtowar", insertable=false, updatable=false)
 	private int idTowar;
 
-	@Column(name="id_nazwa_parametrow", insertable=false, updatable=false)
+	@Column(name="nazwa_parametrow_idnazwa_parametrow", insertable=false, updatable=false)
 	private int idNazwaParametrow;
 
 	public WartoscParametrowPK() {
