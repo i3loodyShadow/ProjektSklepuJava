@@ -11,6 +11,10 @@ import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.Flash;
 import com.sklep.dao.TowarDAO;
+import com.sklep.dao.TowarZamowieniaDAO;
+import com.sklep.dao.WartoscParametrowDAO;
+import com.sklep.dao.ZamowienieDAO;
+import com.sklep.entities.Konto;
 import com.sklep.entities.Towar;
 
 @Named
@@ -73,6 +77,25 @@ public class TowarListBB {
 		flash.put("towar", towar);
 		
 		return PAGE_SZCZEG;
+	}
+	
+	public void doKoszyka(Towar towar) {
+		
+		Konto idKonto = (Konto) flash.get("idKonto");
+		
+		int idTowar = towar.getIdtowar();
+		String producent = towar.getProducent();
+		String model = towar.getModel();
+		
+		WartoscParametrowDAO w = new WartoscParametrowDAO();
+		Integer cena = w.getCena(idTowar);
+		
+		ZamowienieDAO z = new ZamowienieDAO();
+		z.createZamowienie(cena,idKonto);
+		int idZamowienie = z.getSpecificIdZamowienie(idKonto);
+		
+		TowarZamowieniaDAO t = new TowarZamowieniaDAO();
+		t.createKoszyk(cena, producent, model, idZamowienie);
 	}
 	
 	public String doSklepu() {
