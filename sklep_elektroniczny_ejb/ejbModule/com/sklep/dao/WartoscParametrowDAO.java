@@ -3,14 +3,16 @@ package com.sklep.dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.sklep.entities.WartoscParametrow;
 
 @Stateless
 public class WartoscParametrowDAO {
+	private final static String UNIT_NAME = "sklep-simplePU";
 
-	@PersistenceContext
-	EntityManager em;
+	@PersistenceContext(unitName = UNIT_NAME)
+	protected EntityManager em;
 	
 	public void insert(WartoscParametrow wartoscParametrow) {
 		em.persist(wartoscParametrow);
@@ -26,5 +28,30 @@ public class WartoscParametrowDAO {
 
 	public WartoscParametrow get(Object id) {
 		return em.find(WartoscParametrow.class, id);
+	}
+	
+	public int getCena(int idTowar) {
+		int cena;
+		
+		try {
+			
+			Query query = em.createQuery("from WartoscParametrow w where w.towar_idtowar=:idTowar and w.nazwa_parametrow_idnazwa_parametrow=:trzy");
+			
+			query.setParameter("idTowar", idTowar);
+			
+			int trzy = 3;
+			query.setParameter("trzy", trzy);
+			
+			cena = (int)query.getSingleResult();
+			
+			return cena;
+		} catch (javax.persistence.NoResultException e){
+			cena = 0;
+			return cena;
+		} catch (java.lang.NullPointerException e) {
+			cena = 0;
+			return cena;
+		}
+			
 	}
 }
