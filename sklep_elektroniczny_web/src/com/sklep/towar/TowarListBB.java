@@ -6,10 +6,15 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+
+import com.sklep.dao.KontoDAO;
 import com.sklep.dao.TowarDAO;
 import com.sklep.dao.TowarZamowieniaDAO;
 import com.sklep.dao.WartoscParametrowDAO;
@@ -34,6 +39,9 @@ public class TowarListBB {
 	
 	@EJB
 	TowarDAO towarDAO;
+	
+	@EJB
+	KontoDAO kontoDAO;
 		
 	public String getProducent() {
 		return producent;
@@ -80,22 +88,26 @@ public class TowarListBB {
 	}
 	
 	public void doKoszyka(Towar towar) {
-		
-		Konto idKonto = (Konto) flash.get("idKonto");
+
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
+		HttpSession session = (HttpSession) request.getSession(true);
+		int idKonto = (int)session.getAttribute("idKonto");
 		
 		int idTowar = towar.getIdtowar();
 		String producent = towar.getProducent();
 		String model = towar.getModel();
 		
+		Konto k = kontoDAO.getKontoFromId(idKonto);
+		
 		WartoscParametrowDAO w = new WartoscParametrowDAO();
 		Integer cena = w.getCena(idTowar);
 		
 		ZamowienieDAO z = new ZamowienieDAO();
-		z.createZamowienie(cena,idKonto);
-		int idZamowienie = z.getSpecificIdZamowienie(idKonto);
+		z.createZamowienie(cena,k);
+
 		
-		TowarZamowieniaDAO t = new TowarZamowieniaDAO();
-		t.createKoszyk(cena, producent, model, idZamowienie);
+		
 	}
 	
 	public String doSklepu() {
