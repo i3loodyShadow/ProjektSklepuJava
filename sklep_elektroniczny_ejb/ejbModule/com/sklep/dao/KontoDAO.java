@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.faces.context.Flash;
 
 import com.sklep.entities.Konto;
 import com.sklep.entities.Rola;
@@ -111,6 +110,26 @@ public class KontoDAO {
 		} catch (Exception e){
 			success = false;
 			return success;
+		}
+	}
+	
+	public Konto getKontoFromId(int idKonto) {
+		
+		Konto k = new Konto();
+		
+		try {
+			
+			Query query = em.createQuery("from Konto k where k.idkonto=:idKonto");
+			
+			query.setParameter("idKonto", idKonto);
+			
+			k = (Konto)query.getSingleResult();
+			return k;
+
+		} catch (javax.persistence.NoResultException e) {
+			k = null;
+			
+			return k;
 		}
 	}
 }
