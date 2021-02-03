@@ -30,8 +30,8 @@ public class WartoscParametrowDAO {
 		return em.find(WartoscParametrow.class, id);
 	}
 	
-	public int getCena(int idTowar) {
-		int cena;
+	public Integer getCena(int idTowar) {
+		Integer cena;
 		
 		try {
 			
@@ -42,7 +42,7 @@ public class WartoscParametrowDAO {
 			int trzy = 3;
 			query.setParameter("trzy", trzy);
 			
-			cena = (int)query.getSingleResult();
+			cena = (Integer)query.getSingleResult();
 			
 			return cena;
 		} catch (javax.persistence.NoResultException e){
