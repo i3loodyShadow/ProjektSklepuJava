@@ -13,9 +13,9 @@ public class ZamowienieDAO {
 	private final static String UNIT_NAME = "sklep-simplePU";
 	
 	@PersistenceContext(unitName = UNIT_NAME)
-	protected EntityManager em;
+	EntityManager em;
 	
-	public void insert(Zamowienie zamowienie) {
+	public void create(Zamowienie zamowienie) {
 		em.persist(zamowienie);
 	}
 
@@ -31,18 +31,19 @@ public class ZamowienieDAO {
 		return em.find(Zamowienie.class, id);
 	}
 	
-	public void createZamowienie(Integer cena, Konto idKonto) {
+	public void createZamowienie(Integer cena, Konto konto) { //tutaj zmieniæ voida na funkcjê zwracaln¹ i zobaczyæ
 		
 		Zamowienie z = new Zamowienie();
 		
 		z.setStatus(1);
 		z.setKoszt(cena.toString());
-		z.setKonto(idKonto);
+		z.setKonto(konto);
 		
-		insert(z);
+		create(z);
 	}
 	
 	public int getSpecificIdZamowienie(Konto konto) {
+		
 		int idZamowienie;
 		
 		try {
