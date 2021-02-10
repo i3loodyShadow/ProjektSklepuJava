@@ -30,28 +30,4 @@ public class WartoscParametrowDAO {
 		return em.find(WartoscParametrow.class, id);
 	}
 	
-	public Integer getCena(int idTowar) {
-		Integer cena;
-		
-		try {
-			
-			Query query = em.createQuery("from WartoscParametrow w where w.towar_idtowar=:idTowar and w.nazwa_parametrow_idnazwa_parametrow=:trzy");
-			
-			query.setParameter("idTowar", idTowar);
-			
-			int trzy = 3;
-			query.setParameter("trzy", trzy);
-			
-			cena = (Integer)query.getSingleResult();
-			
-			return cena;
-		} catch (javax.persistence.NoResultException e){
-			cena = 0;
-			return cena;
-		} catch (java.lang.NullPointerException e) {
-			cena = 0;
-			return cena;
-		}
-			
-	}
 }
