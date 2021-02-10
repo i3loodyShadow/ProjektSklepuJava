@@ -21,6 +21,9 @@ import com.sklep.dao.WartoscParametrowDAO;
 import com.sklep.dao.ZamowienieDAO;
 import com.sklep.entities.Konto;
 import com.sklep.entities.Towar;
+import com.sklep.entities.TowarZamowienia;
+import com.sklep.entities.WartoscParametrow;
+import com.sklep.entities.Zamowienie;
 
 @Named
 @RequestScoped
@@ -42,6 +45,25 @@ public class TowarListBB {
 	
 	@EJB
 	KontoDAO kontoDAO;
+	
+	@EJB
+	ZamowienieDAO zamowienieDAO;
+	
+	@EJB
+	WartoscParametrowDAO wartoscParametrowDAO;
+	
+	@EJB
+	TowarZamowieniaDAO towarZamowieniaDAO;
+	
+	private List<WartoscParametrow> list;
+	
+	public List<WartoscParametrow> getWPList() {
+		return list;
+	}
+
+	public void setWPList(List<WartoscParametrow> list) {
+		this.list = list;
+	}
 		
 	public String getProducent() {
 		return producent;
@@ -100,14 +122,20 @@ public class TowarListBB {
 		
 		Konto k = kontoDAO.getKontoFromId(idKonto);
 		
-		WartoscParametrowDAO w = new WartoscParametrowDAO();
-		Integer cena = w.getCena(idTowar);
+		list = towarDAO.getTowarDetails(idTowar).getWartoscParametrows();
 		
-		ZamowienieDAO z = new ZamowienieDAO();
-		z.createZamowienie(cena,k);
-
-		
-		
+		for (int i = 0; i<list.size(); i++) {
+			
+			WartoscParametrow test = list.get(i);
+			
+			if(test.getNazwaParametrow().getNazwaParametru().equals("Cena")) {
+				String cena = test.getWartoscParametrow();
+				
+				Zamowienie z = zamowienieDAO.createZamowienie(cena,k);
+				
+				towarZamowieniaDAO.createKoszyk(cena, producent, model, z);
+			}
+		}	 
 	}
 	
 	public String doSklepu() {
