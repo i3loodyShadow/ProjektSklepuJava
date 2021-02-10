@@ -4,7 +4,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.sklep.entities.Towar;
 import com.sklep.entities.TowarZamowienia;
+import com.sklep.entities.Zamowienie;
 
 @Stateless
 public class TowarZamowieniaDAO {
@@ -29,15 +31,25 @@ public class TowarZamowieniaDAO {
 		return em.find(TowarZamowienia.class, id);
 	}
 	
-	public void createKoszyk(Integer cena, String producent, String model, int idZamowienie) {
+	public TowarZamowienia createKoszyk(String cena, String producent, String model, Zamowienie z) {
 		
 		TowarZamowienia t = new TowarZamowienia();
 		
-		t.setIdtowarZamowienia(idZamowienie);
+		t.setZamowienie(z);
 		t.setProducent(producent);
 		t.setModel(model);
-		t.setCena(cena.toString());
+		t.setCena(cena);
 		
-		insert(t);
+		update(t);
+		
+		return t;
+	}
+	
+	public TowarZamowienia getKoszykDetails(int idKonto){
+		
+		TowarZamowienia t = em.find(TowarZamowienia.class, idKonto);	
+		//t.getWartoscParametrows().size();
+		
+		return t;
 	}
 }
