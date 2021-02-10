@@ -31,15 +31,17 @@ public class ZamowienieDAO {
 		return em.find(Zamowienie.class, id);
 	}
 	
-	public void createZamowienie(Integer cena, Konto konto) { //tutaj zmieniæ voida na funkcjê zwracaln¹ i zobaczyæ
+	public Zamowienie createZamowienie(String cena, Konto konto) {
 		
 		Zamowienie z = new Zamowienie();
 		
 		z.setStatus(1);
-		z.setKoszt(cena.toString());
+		z.setKoszt(cena);
 		z.setKonto(konto);
 		
 		create(z);
+		
+		return z;
 	}
 	
 	public int getSpecificIdZamowienie(Konto konto) {
