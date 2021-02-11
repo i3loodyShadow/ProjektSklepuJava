@@ -132,4 +132,12 @@ public class KontoDAO {
 			return k;
 		}
 	}
+	
+	public Konto getZamowienieDetails(int idKonto){
+		
+		Konto k = em.find(Konto.class, idKonto);	
+		k.getZamowienies().size();
+		
+		return k;
+	}
 }
