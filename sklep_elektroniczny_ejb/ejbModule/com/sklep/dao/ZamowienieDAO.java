@@ -44,24 +44,11 @@ public class ZamowienieDAO {
 		return z;
 	}
 	
-	public int getSpecificIdZamowienie(Konto konto) {
+	public Zamowienie getTowarZamowieniaDetails(int idZ){
+	
+		Zamowienie z = em.find(Zamowienie.class, idZ);	
+		z.getTowarZamowienias().size();
 		
-		int idZamowienie;
-		
-		try {
-			
-			Query query = em.createQuery("from Zamowienie z where z.konto_idkonto=:idKonto");
-			
-			query.setParameter("idKonto", konto);
-			
-			idZamowienie = (int)query.getSingleResult();
-			
-			return idZamowienie;
-		} catch (javax.persistence.NoResultException e) {
-			idZamowienie = 0;
-			return idZamowienie;
-		}
-		
-		
+		return z;
 	}
 }
