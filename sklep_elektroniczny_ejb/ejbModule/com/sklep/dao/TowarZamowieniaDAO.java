@@ -1,5 +1,8 @@
 package com.sklep.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,11 +48,4 @@ public class TowarZamowieniaDAO {
 		return t;
 	}
 	
-	public TowarZamowienia getKoszykDetails(int idKonto){
-		
-		TowarZamowienia t = em.find(TowarZamowienia.class, idKonto);	
-		//t.getWartoscParametrows().size();
-		
-		return t;
-	}
 }
