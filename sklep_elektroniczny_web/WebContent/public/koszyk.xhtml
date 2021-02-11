@@ -15,22 +15,51 @@
 		
 		<ui:define name="pageContent">
 		
+		<h:form id="og-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB}">
+
+			<p:column priority="3">
+				<f:facet name="header">
+					<h:outputText value="Towary w koszyku:" />
+				</f:facet>
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		
 		<h:form id="koszyk" style ="margin-left: 3.5em; margin-right: 3.5em;">
 
-		<p:dataTable value="#{koszykBB.list}" var="w">
+		<p:dataTable value="#{koszykBB.tz}" var="t">
 
 			<p:column priority="5">
 				<f:facet name="header">
-					<h:outputText value="Nazwa Parametru" />
+					<h:outputText value="Producent" />
 				</f:facet>
-				<h:outputText value="#{}" />
+			<h:outputText value="#{t.producent}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Wartosci Parametrów" />
+					<h:outputText value="Model" />
 				</f:facet>
-				<h:outputText value="#{w.wartoscParametrow}" />
+			<h:outputText value="#{t.model}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cena" />
+				</f:facet>
+			<h:outputText value="#{t.cena}" />
+			</p:column>
+			
+			<p:column styleClass="centeredColumnContent">
+				<f:facet name="header">
+					<h:outputText value="opcje" />
+				</f:facet>
+
+				<p:commandButton style="margin:5px;" value="Usuń z koszyka"
+					action="#{koszykBB.usunZKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+
 			</p:column>
 		</p:dataTable>
 		</h:form>
