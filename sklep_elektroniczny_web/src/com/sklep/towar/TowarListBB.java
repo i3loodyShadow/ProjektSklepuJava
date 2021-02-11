@@ -57,10 +57,6 @@ public class TowarListBB {
 	
 	private List<WartoscParametrow> list;
 	
-	public List<WartoscParametrow> getWPList() {
-		return list;
-	}
-
 	public void setWPList(List<WartoscParametrow> list) {
 		this.list = list;
 	}
@@ -109,12 +105,19 @@ public class TowarListBB {
 		return PAGE_SZCZEG;
 	}
 	
-	public void doKoszyka(Towar towar) {
-
+	public int getIdKontoFromSession() {
+		
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
 		HttpSession session = (HttpSession) request.getSession(true);
-		int idKonto = (int)session.getAttribute("idKonto");
+		int idK = (int)session.getAttribute("idKonto");
+		
+		return idK;
+	}
+	
+	public void doKoszyka(Towar towar) {
+
+		int idKonto = getIdKontoFromSession();
 		
 		int idTowar = towar.getIdtowar();
 		String producent = towar.getProducent();
