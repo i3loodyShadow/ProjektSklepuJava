@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.sklep.dao.KontoDAO;
+import com.sklep.dao.TowarZamowieniaDAO;
 import com.sklep.dao.ZamowienieDAO;
 import com.sklep.entities.TowarZamowienia;
 import com.sklep.entities.Zamowienie;
@@ -25,6 +27,8 @@ public class KoszykBB {
 	private String prod;
 	private String mod;
 	private int idKonto;
+	private String koszt;
+	private int k;
 	private List<Zamowienie> list;
 	private List<Integer> listIdZ = new ArrayList<Integer>();
 	private List<TowarZamowienia> tz = new ArrayList<TowarZamowienia>();
@@ -35,12 +39,17 @@ public class KoszykBB {
 	@Inject
 	FacesContext context;
 	
+	@Inject
+	ExternalContext extcontext;
+	
 	@EJB
 	KontoDAO kontoDAO;
 	
 	@EJB
 	ZamowienieDAO zamowienieDAO;
 
+	@EJB
+	TowarZamowieniaDAO towarZamowieniaDAO;
 	public String getProd() {
 		return prod;
 	}
@@ -79,13 +88,13 @@ public class KoszykBB {
 	public void setListIdZ(List<Integer> listIdZ) {
 		this.listIdZ = listIdZ;
 	}
-	
-	public List<TowarZamowienia> getTz() {
-		return tz;
-	}
 
 	public void setTz(List<TowarZamowienia> tz) {
 		this.tz = tz;
+	}
+	
+	public int getK() {
+		return k;
 	}
 	
 	public int getIdKontoFromSession() {
@@ -98,7 +107,7 @@ public class KoszykBB {
 		return idK;
 	}
 	
-	public void onLoad() {
+	public List<TowarZamowienia> getTz() {
 		
 		idKonto = getIdKontoFromSession();
 		
@@ -116,14 +125,34 @@ public class KoszykBB {
 			
 			tz.addAll(zamowienieDAO.getTowarZamowieniaDetails(listIdZ.get(i)).getTowarZamowienias());
 			
+			koszt = zamowienieDAO.getTowarZamowieniaDetails(listIdZ.get(i)).getKoszt();
+			
+			k = k + Integer.parseInt(koszt);
+			
 		}
+		
+		return tz;
 
 	}
 	
-	
+	public String usunZKoszyka(TowarZamowienia towarZamowienia) {
+		
+		int idZ = towarZamowienia.getZamowienie().getIdzamowienie();
+		
+		towarZamowieniaDAO.delete(towarZamowienia);
+				
+		zamowienieDAO.deleteZamowienieById(idZ);
+		
+		return PAGE_KOSZYK;
+	}
 
 	public String doKoszyka() {
 		return PAGE_KOSZYK;
 	}
-
+	
+	public void test() {
+		
+		System.out.println("Ciekawe czy zadzia³a");
+		
+	}
 }
