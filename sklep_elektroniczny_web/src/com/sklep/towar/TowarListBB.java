@@ -56,10 +56,6 @@ public class TowarListBB {
 	TowarZamowieniaDAO towarZamowieniaDAO;
 	
 	private List<WartoscParametrow> list;
-	
-	public void setWPList(List<WartoscParametrow> list) {
-		this.list = list;
-	}
 		
 	public String getProducent() {
 		return producent;
