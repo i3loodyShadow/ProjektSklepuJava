@@ -1,13 +1,9 @@
 package com.sklep.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.sklep.entities.Towar;
 import com.sklep.entities.TowarZamowienia;
 import com.sklep.entities.Zamowienie;
 
