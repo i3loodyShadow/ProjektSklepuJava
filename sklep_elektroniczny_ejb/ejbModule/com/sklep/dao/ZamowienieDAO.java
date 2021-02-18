@@ -51,4 +51,14 @@ public class ZamowienieDAO {
 		
 		return z;
 	}
+	
+	public void deleteZamowienieById(int id) {
+		
+		Query query = em.createQuery("delete from Zamowienie z where z.idzamowienie=:idZamowienie");
+		
+		query.setParameter("idZamowienie",id);
+		
+		query.executeUpdate();
+		
+	}
 }
