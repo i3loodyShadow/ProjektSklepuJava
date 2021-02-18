@@ -6,11 +6,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-	
-<f:metadata>
-    <f:viewAction action="#{koszykBB.onLoad()}" />
-</f:metadata>
-	
 	<ui:composition template="/templates/page-template.xhtml">
 		
 		<ui:define name="pageContent">
@@ -58,11 +53,20 @@
 				</f:facet>
 
 				<p:commandButton style="margin:5px;" value="Usuń z koszyka"
-					action="#{koszykBB.usunZKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+					action="#{koszykBB.usunZKoszyka(t)}" update="@form" rendered="#{remoteClient.isInRole('user')}" onclick="location.reload();"/>
+					
+				<p:commandButton style="margin:5px;" value="test"
+					action="#{koszykBB.test()}" rendered="#{remoteClient.isInRole('user')}"/>
 
 			</p:column>
 		</p:dataTable>
 		</h:form>
+		
+		<h5 class=" "></h5>
+    		<p:panel header="Do zapłaty" >
+        		<h:outputText value="#{koszykBB.getK()} zł" />
+    		</p:panel>
+    		
 		</ui:define>
 	
 	</ui:composition>
