@@ -3,14 +3,16 @@ package com.sklep.dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.sklep.entities.WartoscParametrow;
 
 @Stateless
 public class WartoscParametrowDAO {
+	private final static String UNIT_NAME = "sklep-simplePU";
 
-	@PersistenceContext
-	EntityManager em;
+	@PersistenceContext(unitName = UNIT_NAME)
+	protected EntityManager em;
 	
 	public void insert(WartoscParametrow wartoscParametrow) {
 		em.persist(wartoscParametrow);
@@ -27,4 +29,5 @@ public class WartoscParametrowDAO {
 	public WartoscParametrow get(Object id) {
 		return em.find(WartoscParametrow.class, id);
 	}
+	
 }
