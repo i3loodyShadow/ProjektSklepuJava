@@ -6,12 +6,24 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+
+import com.sklep.dao.KontoDAO;
 import com.sklep.dao.TowarDAO;
+import com.sklep.dao.TowarZamowieniaDAO;
+import com.sklep.dao.WartoscParametrowDAO;
+import com.sklep.dao.ZamowienieDAO;
+import com.sklep.entities.Konto;
 import com.sklep.entities.Towar;
+import com.sklep.entities.TowarZamowienia;
+import com.sklep.entities.WartoscParametrow;
+import com.sklep.entities.Zamowienie;
 
 @Named
 @RequestScoped
@@ -30,6 +42,20 @@ public class TowarListBB {
 	
 	@EJB
 	TowarDAO towarDAO;
+	
+	@EJB
+	KontoDAO kontoDAO;
+	
+	@EJB
+	ZamowienieDAO zamowienieDAO;
+	
+	@EJB
+	WartoscParametrowDAO wartoscParametrowDAO;
+	
+	@EJB
+	TowarZamowieniaDAO towarZamowieniaDAO;
+	
+	private List<WartoscParametrow> list;
 		
 	public String getProducent() {
 		return producent;
@@ -73,6 +99,42 @@ public class TowarListBB {
 		flash.put("towar", towar);
 		
 		return PAGE_SZCZEG;
+	}
+	
+	public int getIdKontoFromSession() {
+		
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
+		HttpSession session = (HttpSession) request.getSession(true);
+		int idK = (int)session.getAttribute("idKonto");
+		
+		return idK;
+	}
+	
+	public void doKoszyka(Towar towar) {
+
+		int idKonto = getIdKontoFromSession();
+		
+		int idTowar = towar.getIdtowar();
+		String producent = towar.getProducent();
+		String model = towar.getModel();
+		
+		Konto k = kontoDAO.getKontoFromId(idKonto);
+		
+		list = towarDAO.getTowarDetails(idTowar).getWartoscParametrows();
+		
+		for (int i = 0; i<list.size(); i++) {
+			
+			WartoscParametrow test = list.get(i);
+			
+			if(test.getNazwaParametrow().getNazwaParametru().equals("Cena")) {
+				String cena = test.getWartoscParametrow();
+				
+				Zamowienie z = zamowienieDAO.createZamowienie(cena,k);
+				
+				towarZamowieniaDAO.createKoszyk(cena, producent, model, z);
+			}
+		}	 
 	}
 	
 	public String doSklepu() {
