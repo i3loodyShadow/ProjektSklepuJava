@@ -53,7 +53,7 @@
 					action="#{towarListBB.szczegTowar(t)}" />
 
 				<p:commandButton style="margin:5px;" value="Dodaj do koszyka"
-					action="#{towarListBB.deleteTowar(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+					action="#{towarListBB.doKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
 					
 				<p:commandButton style="margin:5px;" value="Edytuj"
 					action="#{towarListBB.deleteTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
