@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+		<style type="text/css">
+    		.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+        	text-align: center;
+    		}	
+
+    		.customPanelGrid .ui-panelgrid-content {
+        	align-items: center;
+    		}
+		</style>
+		
+		<h:form>
+		
+		<div class="Email">
+    			<p:panelGrid columns="4" layout="grid"
+                 	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+                 	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+                 	
+        		<p:outputLabel for="nowyEmail" value="Wprowadź nowy E-mail:"/>
+        		<p:inputText id="nowyEmail" value="#{ustawieniaKontaBB.nowyEmail}" required="true" requiredMessage="Nie podano adresu E-mail!" match="nowyEmailPowt" validatorMessage="Wprowadzone E-maile nie są takie same"/>
+        		
+        		<p:outputLabel for="staryEmail" value="Wprowadź obecny E-mail:"/>
+        		<p:inputText id="staryEmail" value="#{ustawieniaKontaBB.staryEmail}" required="true" requiredMessage="Nie podano obecnego adresu E-mail!"/>        		
+
+        		<p:outputLabel for="nowyEmailPowt" value="Powtórz nowy E-mail:"/>
+        		<p:inputText id="nowyEmailPowt" required="true" requiredMessage="Nie powtórzono nowego adresu E-mail!"/>        		
+
+       			<p:commandButton type="button" value="Zmień E-mail" action="#{ustawieniaKontaBB.zmienEmail}"/>
+       			
+       			<p:message for="nowyEmail" />
+       			<p:message for="staryEmail" />
+       			<p:message for="nowyEmailPowt" />
+       			
+   				</p:panelGrid>
+   				
+		</div>
+		
+		</h:form>
+		
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>
