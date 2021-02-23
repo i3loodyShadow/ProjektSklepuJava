@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+		<h:form id="og-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{szczegTowaruBB}">
+
+			<p:column priority="3">
+				<f:facet name="header">
+					<h:outputText value="Towary w koszyku:" />
+				</f:facet>
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		
+		<h:form id="koszyk" style ="margin-left: 3.5em; margin-right: 3.5em;">
+
+		<p:dataTable value="#{koszykBB.tz}" var="t">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="Producent" />
+				</f:facet>
+			<h:outputText value="#{t.producent}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Model" />
+				</f:facet>
+			<h:outputText value="#{t.model}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cena" />
+				</f:facet>
+			<h:outputText value="#{t.cena}" />
+			</p:column>
+			
+			<p:column styleClass="centeredColumnContent">
+				<f:facet name="header">
+					<h:outputText value="opcje" />
+				</f:facet>
+
+				<p:commandButton style="margin:5px;" value="Usuń z koszyka"
+					action="#{koszykBB.usunZKoszyka(t)}" update="@form" rendered="#{remoteClient.isInRole('user')}" onclomplete="javascript:window.location.reload();"/>
+
+			</p:column>
+		</p:dataTable>
+		</h:form>
+		
+		<h5 class=" "></h5>
+    		<p:panel header="Do zapłaty" >
+        		<h:outputText value="#{koszykBB.getK()} zł" />
+    		</p:panel>
+    		
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>
