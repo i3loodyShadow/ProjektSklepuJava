@@ -2,7 +2,6 @@ package com.sklep.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -21,7 +20,7 @@ public class Zamowienie implements Serializable {
 
 	private String koszt;
 
-	private BigDecimal status;
+	private int status;
 
 	//bi-directional many-to-one association to TowarZamowienia
 	@OneToMany(mappedBy="zamowienie")
@@ -50,11 +49,11 @@ public class Zamowienie implements Serializable {
 		this.koszt = koszt;
 	}
 
-	public BigDecimal getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(BigDecimal status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
