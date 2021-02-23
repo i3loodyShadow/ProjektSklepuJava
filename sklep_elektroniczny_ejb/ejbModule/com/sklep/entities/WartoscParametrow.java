@@ -1,3 +1,4 @@
+
 package com.sklep.entities;
 
 import java.io.Serializable;
