@@ -26,7 +26,10 @@
       			action="#{towarListBB.login()}"  icon="pi pi-angle-double-right" style="margin:5px;"/>
       		
       		<p:commandButton style="margin:5px;" id="Koszyk" rendered="#{remoteClient.isInRole('user')}" value="Koszyk" 
-      			action="#{loginBB.doLogout()}"  icon="pi pi-shopping-cart"/>
+      			action="#{koszykBB.doKoszyka()}"  icon="pi pi-shopping-cart"/>
+      			
+      		<p:commandButton style="margin:5px;" id="Ustawienia" rendered="#{remoteClient.isInRole('user')}" value="Ustawienia konta" 
+      			action="#{ustawieniaKontaBB.doUstawien()}"  icon="pi pi-shopping-cart"/>
       		
       		<p:commandButton style="margin:5px;" id="Wylogowanie" rendered="#{remoteClient.isInRole('admin') or remoteClient.isInRole('user')}" value="Wyloguj" 
       			action="#{loginBB.doLogout()}"  icon="pi pi-angle-double-left"/>
