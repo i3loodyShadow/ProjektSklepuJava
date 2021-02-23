@@ -7,9 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.simplesecurity.RemoteClient;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.faces.context.Flash;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -42,9 +40,6 @@ public class LoginBB {
 	public void setHaslo(String haslo) {
 		this.haslo = haslo;
 	}
-	
-	@Inject
-	Flash flash;
 
 	@EJB
 	KontoDAO kontoDAO;
@@ -78,11 +73,11 @@ public class LoginBB {
 		//store RemoteClient with request info in session (needed for SecurityFilter)
 		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
 		client.store(request);
-
+		
 		// and enter the system (now SecurityFilter will pass the request)
 		
-		int id = konto.getIdkonto();
-		flash.put("idKonto",id);
+		HttpSession session = (HttpSession) request.getSession(true);
+		session.setAttribute("idKonto", konto.getIdkonto());
 		
 		return PAGE_USER;
 	}
