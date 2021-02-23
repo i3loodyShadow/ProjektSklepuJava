@@ -27,4 +27,6 @@ public class NazwaParametrowDAO {
 	public NazwaParametrow get(Object id) {
 		return em.find(NazwaParametrow.class, id);
 	}
+	
+	
 }
