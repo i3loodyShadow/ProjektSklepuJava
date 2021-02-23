@@ -14,11 +14,11 @@
  
     		<p:panel id="basic" header="Logowanie" style="margin-bottom:20px">
        			<h:panelGrid columns="2" cellpadding="10">
-            		<h:outputLabel for="login" value="login:" />
-					<h:inputText id="login" value="#{loginBB.login}"
+            		<p:outputLabel for="login" value="login:" />
+					<p:inputText id="login" value="#{loginBB.login}"
 						required="true"	requiredMessage="podaj login"/>
-					<h:outputLabel for="pass" value="hasło:" />
-					<h:inputSecret id="pass" value="#{loginBB.haslo}"
+					<p:outputLabel for="pass" value="hasło:" />
+					<p:password id="pass" value="#{loginBB.haslo}"
 						required="true"	requiredMessage="podaj hasło"/>
         		</h:panelGrid>
         
