@@ -22,9 +22,6 @@ import com.sklep.entities.WartoscParametrow;
 public class SzczegTowaruBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_MAIN = "/public/towarList?faces-redirect=true";
-	private static final String PAGE_STAY_AT_THE_SAME = null;
-
 	private Towar towar = new Towar();
 	private Towar loaded = new Towar();
 	private String prod;
