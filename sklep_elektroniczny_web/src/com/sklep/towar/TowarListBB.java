@@ -95,7 +95,7 @@ public class TowarListBB {
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
 		//session.setAttribute("towar", towar);
 		
-		//2. Pass object through flash 
+		//2. Pass object through flash
 		flash.put("towar", towar);
 		
 		return PAGE_SZCZEG;
