@@ -18,12 +18,14 @@
     		.customPanelGrid .ui-panelgrid-content {
         	align-items: center;
     		}
+    		
+    		.
 		</style>
 		
 		<h:form>
 		
 		<div class="Email">
-    			<p:panelGrid columns="4" layout="grid"
+    			<p:panelGrid id="email" columns="4" layout="grid"
                  	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
                  	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
                  	
@@ -36,17 +38,51 @@
         		<p:outputLabel for="nowyEmailPowt" value="Powtórz nowy E-mail:"/>
         		<p:inputText id="nowyEmailPowt" required="true" requiredMessage="Nie powtórzono nowego adresu E-mail!"/>        		
 
-       			<p:commandButton type="button" value="Zmień E-mail" action="#{ustawieniaKontaBB.zmienEmail}"/>
+       			<p:commandButton id="submitEmail" value="Zmień E-mail" action="#{ustawieniaKontaBB.zmienEmail()}" update="email mess"/>
        			
        			<p:message for="nowyEmail" />
        			<p:message for="staryEmail" />
-       			<p:message for="nowyEmailPowt" />
+       			<p:message for="nowyEmailPowt" />	
        			
    				</p:panelGrid>
    				
 		</div>
 		
 		</h:form>
+		
+		&nbsp;
+		
+		<h:form>
+		
+		<div class="Haslo">
+    			<p:panelGrid id="haslo" columns="4" layout="grid"
+                 	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+                 	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+                 	
+        		<p:outputLabel for="noweHaslo" value="Wprowadź nowe hasło:"/>
+        		<p:inputText id="noweHaslo" value="#{ustawieniaKontaBB.noweHaslo}" required="true" requiredMessage="Nie podano hasła!" match="noweHasloPowt" validatorMessage="Wprowadzone hasła nie są takie same"/>
+        		
+        		<p:outputLabel for="stareHaslo" value="Wprowadź obecne hasło"/>
+        		<p:inputText id="stareHaslo" value="#{ustawieniaKontaBB.stareHaslo}" required="true" requiredMessage="Nie podano obecnego hasła!"/>        		
+
+        		<p:outputLabel for="noweHasloPowt" value="Powtórz nowe hasło:"/>
+        		<p:inputText id="noweHasloPowt" required="true" requiredMessage="Nie powtórzono nowego hasła!"/>        		
+
+       			<p:commandButton id="submitHaslo" value="Zmień hasło" action="#{ustawieniaKontaBB.zmienHaslo()}" update="haslo mess"/>
+       			
+       			<p:message for="noweHaslo" />
+       			<p:message for="stareHaslo" />
+       			<p:message for="noweHasloPowt" />	
+       			
+   				</p:panelGrid>
+   				
+		</div>
+		
+		</h:form>
+		
+		<p:messages id="mess" showDetail="true" closable="true">
+        			<p:autoUpdate/>
+    	</p:messages>
 		
 		</ui:define>
 	
