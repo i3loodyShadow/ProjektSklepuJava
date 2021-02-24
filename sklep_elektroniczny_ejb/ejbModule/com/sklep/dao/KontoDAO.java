@@ -148,4 +148,12 @@ public class KontoDAO {
 		
 		return k;
 	}
+	
+	public Konto ustawHaslo(Konto k, String noweHaslo) {
+
+		k.setHaslo(noweHaslo);
+		merge(k);
+		
+		return k;
+	}
 }
