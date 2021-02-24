@@ -25,11 +25,11 @@
  	
         		<p:outputLabel for="pwd1" value="Hasło:" />
         		<p:password id="pwd1" value="#{rejestracjaBB.haslo}" required="true" requiredMessage="Nie podano hasła!" label="Password 1"
-        		match="pwd1" validatorMessage="Hasła nie są takie same"/>
+        		match="pwd2" validatorMessage="Hasła nie są takie same"/>
         		<p:message for="pwd1"/>
  
         		<p:outputLabel for="pwd2" value="Powtórz hasło:" />
-        		<p:password id="pwd2" value="#{rejestracjaBB.haslo}" required="true" requiredMessage="Nie powtórzono hasła" label="Password 2"/>
+        		<p:password id="pwd2" required="true" requiredMessage="Nie powtórzono hasła" label="Password 2"/>
         		<p:message for="pwd2"/>
         		
         		<p:commandButton id="submitButton" value="Zarejestruj" action="#{rejestracjaBB.zarejestruj}" update="grid mess"/>
