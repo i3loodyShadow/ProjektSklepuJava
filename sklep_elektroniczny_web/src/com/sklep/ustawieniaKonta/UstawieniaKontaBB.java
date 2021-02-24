@@ -2,7 +2,9 @@ package com.sklep.ustawieniaKonta;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,26 +21,47 @@ public class UstawieniaKontaBB {
 	@EJB
 	KontoDAO kontoDAO;
 	
+	@Inject
+	FacesContext context;
+	
+	private int idKonto;
 	private String nowyEmail;
 	private String staryEmail;
+	private String noweHaslo;
+	private String stareHaslo;
+	
+	Konto k = null;
 
 	public String getNowyEmail() {
 		return nowyEmail;
 	}
 
-
 	public void setNowyEmail(String nowyEmail) {
 		this.nowyEmail = nowyEmail;
 	}
-
 
 	public String getStaryEmail() {
 		return staryEmail;
 	}
 
-
 	public void setStaryEmail(String staryEmail) {
 		this.staryEmail = staryEmail;
+	}
+	
+	public String getNoweHaslo() {
+		return noweHaslo;
+	}
+
+	public void setNoweHaslo(String noweHaslo) {
+		this.noweHaslo = noweHaslo;
+	}
+
+	public String getStareHaslo() {
+		return stareHaslo;
+	}
+
+	public void setStareHaslo(String stareHaslo) {
+		this.stareHaslo = stareHaslo;
 	}
 	
 	public int getIdKontoFromSession() {
@@ -53,18 +76,53 @@ public class UstawieniaKontaBB {
 	
 	public void zmienEmail() {
 		
-		int idKonto = getIdKontoFromSession();
+		idKonto = getIdKontoFromSession();
 		
-		Konto k = kontoDAO.getKontoFromId(idKonto);
+		k = kontoDAO.getKontoFromId(idKonto);
 		
-		k = kontoDAO.ustawEmail(k, nowyEmail);
+		if(k.getEmail().equals(staryEmail)) {
 		
-		if(k != null) {
-			//tutaj bêdzie wygenerowana informacja je¿eli pomyœlne zmienienie emaila
+			k = kontoDAO.ustawEmail(k, nowyEmail);
+		
+				if(k != null) {
+					context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Pomyœlnie zapisano nowy E-mail", null));
+				} else {
+					context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+				}
+		
 		} else {
-			//a tutaj je¿eli coœ siê nie powiedzie
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stary E-mail nie jest poprawny", null));
 		}
 	}
+	
+	public void zmienHaslo() {
+		
+		idKonto = getIdKontoFromSession();
+		
+		k = kontoDAO.getKontoFromId(idKonto);
+		
+		if(k.getHaslo().equals(stareHaslo)) {
+			
+			k = kontoDAO.ustawHaslo(k, noweHaslo);
+			
+				if(k != null) {
+					context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Pomyœlnie zapisano nowe has³o", null));
+				} else {
+					context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+				}
+	
+		} else {
+			context.addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stare has³o nie jest poprawne", null));
+		}
+			
+	}
+	
 	
 	public String doUstawien() {
 		return PAGE_SETTINGS;
