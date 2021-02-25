@@ -156,4 +156,14 @@ public class KontoDAO {
 		
 		return k;
 	}
+	
+	public void deleteKontoById(int idKonto) {
+		
+		Query query = em.createQuery("delete from Konto k where k.idkonto=:idKonto");
+		
+		query.setParameter("idKonto",idKonto);
+		
+		query.executeUpdate();
+		
+	}
 }
