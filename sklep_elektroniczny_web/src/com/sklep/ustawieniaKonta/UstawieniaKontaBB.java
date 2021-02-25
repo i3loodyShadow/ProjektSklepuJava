@@ -1,5 +1,8 @@
 package com.sklep.ustawieniaKonta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -10,27 +13,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.sklep.dao.KontoDAO;
+import com.sklep.dao.TowarZamowieniaDAO;
+import com.sklep.dao.ZamowienieDAO;
 import com.sklep.entities.Konto;
+import com.sklep.entities.TowarZamowienia;
+import com.sklep.entities.Zamowienie;
 
 @Named
 @RequestScoped
 public class UstawieniaKontaBB {
 	
 	private static final String PAGE_SETTINGS = "/public/ustawieniaKonta?faces-redirect=true";
+	private static final String PAGE_LOGIN = "/public/login";
 	
 	@EJB
 	KontoDAO kontoDAO;
+	
+	@EJB
+	ZamowienieDAO zamowienieDAO;
+	
+	@EJB
+	TowarZamowieniaDAO towarZamowieniaDAO;
 	
 	@Inject
 	FacesContext context;
 	
 	private int idKonto;
 	private String nowyEmail;
+	private String nowyEmailPowt;
 	private String staryEmail;
 	private String noweHaslo;
 	private String stareHaslo;
 	
 	Konto k = null;
+	Zamowienie z;
+	private List<Zamowienie> list;
+	private List<Integer> listIdZ = new ArrayList<Integer>();
+	private List<TowarZamowienia> tz = new ArrayList<TowarZamowienia>();
 
 	public String getNowyEmail() {
 		return nowyEmail;
@@ -64,6 +83,38 @@ public class UstawieniaKontaBB {
 		this.stareHaslo = stareHaslo;
 	}
 	
+	public String getNowyEmailPowt() {
+		return nowyEmailPowt;
+	}
+
+	public void setNowyEmailPowt(String nowyEmailPowt) {
+		this.nowyEmailPowt = nowyEmailPowt;
+	}
+	
+	public List<Zamowienie> getList() {
+		return list;
+	}
+
+	public void setList(List<Zamowienie> list) {
+		this.list = list;
+	}
+	
+	public List<Integer> getListIdZ() {
+		return listIdZ;
+	}
+
+	public void setListIdZ(List<Integer> listIdZ) {
+		this.listIdZ = listIdZ;
+	}
+	
+	public List<TowarZamowienia> getTz() {
+		return tz;
+	}
+
+	public void setTz(List<TowarZamowienia> tz) {
+		this.tz = tz;
+	}
+	
 	public int getIdKontoFromSession() {
 		
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -80,7 +131,9 @@ public class UstawieniaKontaBB {
 		
 		k = kontoDAO.getKontoFromId(idKonto);
 		
-		if(k.getEmail().equals(staryEmail)) {
+		String sE = k.getEmail();
+		
+		if(sE.equals(staryEmail) && nowyEmail.equals(nowyEmailPowt)) {
 		
 			k = kontoDAO.ustawEmail(k, nowyEmail);
 		
@@ -89,12 +142,20 @@ public class UstawieniaKontaBB {
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Pomyœlnie zapisano nowy E-mail", null));
 				} else {
 					context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu!", null));
 				}
 		
-		} else {
+		} 
+		
+		if(!sE.equals(staryEmail)){
 			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stary E-mail nie jest poprawny", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stary E-mail nie jest poprawny!", null));	
+		}
+		
+		if(!nowyEmail.equals(nowyEmailPowt)){
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wprowadzone adresy E-mail nie s¹ sobie równe!", null));
+			
 		}
 	}
 	
@@ -123,6 +184,64 @@ public class UstawieniaKontaBB {
 			
 	}
 	
+	public String usunKonto() {
+		
+		idKonto = getIdKontoFromSession();
+		
+		k = kontoDAO.getZamowienieDetails(idKonto);
+		
+		list = k.getZamowienies();
+		
+		if(list.isEmpty()) {
+			
+			Logout();
+			
+			kontoDAO.remove(k);
+			
+		} else {
+			
+			for(int i=0; i<list.size(); i++) {
+				
+				Zamowienie z = list.get(i);
+				
+				listIdZ.add(z.getIdzamowienie());
+				
+			}
+			
+			for (int i = 0; i<listIdZ.size(); i++){
+				
+				tz.addAll(zamowienieDAO.getTowarZamowieniaDetails(listIdZ.get(i)).getTowarZamowienias());
+				
+			}
+			
+			for (int i=0; i<tz.size(); i++) {
+					
+				int idTZ = tz.get(i).getIdtowarZamowienia();
+				
+				TowarZamowienia towZam = towarZamowieniaDAO.get(idTZ);
+				
+				int idZ = towZam.getZamowienie().getIdzamowienie();
+				
+				towarZamowieniaDAO.delete(towZam);
+				
+				zamowienieDAO.deleteZamowienieById(idZ);
+				
+			}
+			
+			Logout();
+			
+			kontoDAO.deleteKontoById(idKonto);
+
+		}
+		return PAGE_LOGIN;
+	}
+	
+	public void Logout() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+
+		session.invalidate();
+	}
 	
 	public String doUstawien() {
 		return PAGE_SETTINGS;
