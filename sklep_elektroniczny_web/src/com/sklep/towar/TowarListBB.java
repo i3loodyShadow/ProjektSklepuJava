@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -39,6 +40,9 @@ public class TowarListBB {
 	
 	@Inject
 	Flash flash;
+	
+	@Inject
+	FacesContext context;
 	
 	@EJB
 	TowarDAO towarDAO;
@@ -134,7 +138,9 @@ public class TowarListBB {
 				
 				towarZamowieniaDAO.createKoszyk(cena, producent, model, z);
 			}
-		}	 
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano do koszyka"));
 	}
 	
 	public String doSklepu() {
