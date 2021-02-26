@@ -138,24 +138,19 @@ public class UstawieniaKontaBB {
 			k = kontoDAO.ustawEmail(k, nowyEmail);
 		
 				if(k != null) {
-					context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Pomyœlnie zapisano nowy E-mail", null));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano nowy E-mail"));
 				} else {
-					context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu!", null));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu!"));
 				}
 		
 		} 
 		
 		if(!sE.equals(staryEmail)){
-			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stary E-mail nie jest poprawny!", null));	
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Stary E-mail nie jest poprawny!"));
 		}
 		
 		if(!nowyEmail.equals(nowyEmailPowt)){
-			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wprowadzone adresy E-mail nie s¹ sobie równe!", null));
-			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wprowadzone adresy E-mail nie s¹ sobie równe!"));
 		}
 	}
 	
@@ -170,16 +165,13 @@ public class UstawieniaKontaBB {
 			k = kontoDAO.ustawHaslo(k, noweHaslo);
 			
 				if(k != null) {
-					context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Pomyœlnie zapisano nowe has³o", null));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano nowe has³o"));
 				} else {
-					context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapis"));
 				}
 	
 		} else {
-			context.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Stare has³o nie jest poprawne", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Stare has³o nie jest poprawne"));
 		}
 			
 	}
