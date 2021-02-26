@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -143,6 +144,8 @@ public class KoszykBB {
 				
 		zamowienieDAO.deleteZamowienieById(idZ);
 		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie usuniêto produkt z koszyka"));
+		
 		return PAGE_KOSZYK;
 	}
 
@@ -150,9 +153,4 @@ public class KoszykBB {
 		return PAGE_KOSZYK;
 	}
 	
-	public void test() {
-		
-		System.out.println("Ciekawe czy zadzia³a");
-		
-	}
 }
