@@ -3,12 +3,15 @@ package com.sklep.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sklep.entities.GrupyTowarow;
 import com.sklep.entities.Towar;
+import com.sklep.dao.GrupyTowarowDAO;
 
 //DAO - Data Access Object for Person entity
 //Designed to serve as an interface between higher layers of application and data.
@@ -18,6 +21,9 @@ import com.sklep.entities.Towar;
 public class TowarDAO {
 	private final static String UNIT_NAME = "sklep-simplePU";
 
+	@EJB
+	GrupyTowarowDAO grupyTowarowDAO;
+	
 	// Dependency injection (no setter method is needed)
 	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
@@ -102,5 +108,23 @@ public class TowarDAO {
 		return t;
 	}
 	
+	public Towar stworzTowar(String p, String m, GrupyTowarow g) {
+		
+		Towar t = new Towar();
+		
+		try {
+			
+			t.setProducent(p);
+			t.setModel(m);
+			t.setGrupyTowarow(g);
+			create(t);
+			
+		} catch (Exception e) {
+			t = null;
+		}
+		
+		return t;
+		
+	}
 
 }
