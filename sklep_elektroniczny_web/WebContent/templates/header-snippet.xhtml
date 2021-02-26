@@ -18,6 +18,9 @@
         
         	<p:commandButton style="margin:5px;" value="Do sklepu" 
         		action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
+        		
+        	<p:commandButton style="margin:5px;" id="DodajProdukt" rendered="#{remoteClient.isInRole('admin')}" value="Dodaj produkt" 
+            	action="#{stronaAdminaBB.wyswietlStroneDodawania()}" icon="pi pi-user-plus"/>	
         
             <p:commandButton id="Rejestracja" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zarejestuj" 
             	action="#{rejestracjaBB.doRejestracji()}" icon="pi pi-user-plus"/>
@@ -28,7 +31,7 @@
       		<p:commandButton style="margin:5px;" id="Koszyk" rendered="#{remoteClient.isInRole('user')}" value="Koszyk" 
       			action="#{koszykBB.doKoszyka()}"  icon="pi pi-shopping-cart"/>
       			
-      		<p:commandButton style="margin:5px;" id="Ustawienia" rendered="#{remoteClient.isInRole('user')}" value="Ustawienia konta" 
+      		<p:commandButton style="margin:5px;" id="Ustawienia" rendered="#{(remoteClient.isInRole('admin')) or (remoteClient.isInRole('user'))}" value="Ustawienia konta" 
       			action="#{ustawieniaKontaBB.doUstawien()}"  icon="pi pi-shopping-cart"/>
       		
       		<p:commandButton style="margin:5px;" id="Wylogowanie" rendered="#{remoteClient.isInRole('admin') or remoteClient.isInRole('user')}" value="Wyloguj" 
