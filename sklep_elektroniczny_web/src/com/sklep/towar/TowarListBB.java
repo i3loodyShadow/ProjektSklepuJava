@@ -143,6 +143,21 @@ public class TowarListBB {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano do koszyka"));
 	}
 	
+	public String usunProdukt(Towar towar) {
+		
+		int idKonto = getIdKontoFromSession();
+		
+		Konto k = kontoDAO.getKontoFromId(idKonto);
+		
+		if(k.getRola().getNazwaRoli().equals("admin")) {
+			
+			towarDAO.remove(towar);
+		
+		}
+		
+		return PAGE_SHOP;
+	}
+	
 	public String doSklepu() {
 		return PAGE_SHOP;
 	}
