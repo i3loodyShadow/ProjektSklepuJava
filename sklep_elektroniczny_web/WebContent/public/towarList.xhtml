@@ -60,10 +60,10 @@
 					action="#{towarListBB.doKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
 					
 				<p:commandButton style="margin:5px;" value="Edytuj"
-					action="#{towarListBB.deleteTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
+					action="#{towarListBB.usunProdukt(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
 					
 				<p:commandButton value="Usuń"
-					action="#{towarListBB.deleteTowar(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
+					action="#{towarListBB.usunProdukt(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
 
 			</p:column>
 
