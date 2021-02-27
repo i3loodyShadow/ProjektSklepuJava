@@ -32,6 +32,7 @@ public class TowarListBB {
 	private static final String PAGE_SZCZEG = "/public/szczegTowaru?faces-redirect=true";
 	private static final String PAGE_SHOP = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
+	private static final String PAGE_EDIT = "/pages/admin/edycjaTowaru?faces-redirect=true";
 
 	private String producent;
 		
@@ -95,11 +96,7 @@ public class TowarListBB {
 	}
 
 	public String szczegTowar(Towar towar){
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("towar", towar);
-		
-		//2. Pass object through flash
+
 		flash.put("towar", towar);
 		
 		return PAGE_SZCZEG;
@@ -156,6 +153,13 @@ public class TowarListBB {
 		}
 		
 		return PAGE_SHOP;
+	}
+	
+	public String edytujTowar(Towar towar) {
+			flash.put("towar", towar);
+
+		return PAGE_EDIT;
+		
 	}
 	
 	public String doSklepu() {
