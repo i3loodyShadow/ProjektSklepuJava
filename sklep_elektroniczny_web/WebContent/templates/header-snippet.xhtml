@@ -20,7 +20,7 @@
         		action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
         		
         	<p:commandButton style="margin:5px;" id="DodajProdukt" rendered="#{remoteClient.isInRole('admin')}" value="Dodaj produkt" 
-            	action="#{stronaAdminaBB.wyswietlStroneDodawania()}" icon="pi pi-user-plus"/>	
+            	action="#{dodawanieTowaruBB.wyswietlStroneDodawania()}" icon="pi pi-user-plus"/>	
         
             <p:commandButton id="Rejestracja" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zarejestuj" 
             	action="#{rejestracjaBB.doRejestracji()}" icon="pi pi-user-plus"/>
