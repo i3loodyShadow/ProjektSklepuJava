@@ -8,52 +8,60 @@
 	
 	
 <f:metadata>
-    <f:viewAction action="#{szczegTowaruBB.onLoad()}" />
+    <f:viewAction action="#{edycjaTowaruBB.onLoad()}" />
 </f:metadata>
 	
 	<ui:composition template="/templates/page-template.xhtml">
 		
 		<ui:define name="pageContent">
-		
-		<h:form id="og-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
 
-		<p:dataTable value="#{szczegTowaruBB}">
-
-			<p:column priority="3">
-				<f:facet name="header">
-					<h:outputText value="Producent" />
-				</f:facet>
-				<h:outputText value="#{szczegTowaruBB.towar.producent}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Model" />
-				</f:facet>
-				<h:outputText value="#{szczegTowaruBB.towar.model}" />
-			</p:column>
-		</p:dataTable>
-		</h:form>
-		
-		<h:form id="szczeg-tab" style ="margin-left: 3.5em; margin-right: 3.5em;">
-
-		<p:dataTable value="#{szczegTowaruBB.list}" var="w">
-
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="Nazwa Parametru" />
-				</f:facet>
-				<h:outputText value="#{w.nazwaParametrow.nazwaParametru}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Wartosci Parametrów" />
-				</f:facet>
-				<h:outputText value="#{w.wartoscParametrow}" />
-			</p:column>
-		</p:dataTable>
-		</h:form>
+			<h:form>
+				<p:panelGrid columns="2" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					
+					<p:row styleClass="my-heading-row">
+            			Zmiana podstawowych danych:
+       	 			</p:row>
+					
+					<h:outputLabel for="producent" value="Producent:" />
+					<p:inputText id="producent" value="#{edycjaTowaruBB.towar.producent}"
+						required="true" requiredMessage="Podaj producenta"
+						validatorMessage="Najwyżej 15 znaków">
+						<f:validateLength maximum="15" />
+					</p:inputText>
+					<p:message for="producent" display="icon"/>
+	
+					<h:outputLabel for="model" value="Model:" />
+					<p:inputText id="model" value="#{edycjaTowaruBB.towar.model}"
+						required="true" requiredMessage="Podaj model"
+						validatorMessage="Najwyżej 15 znaków">
+						<f:validateLength maximum="15" />
+					</p:inputText>
+					<p:message for="model" display="icon"/>
+	
+				</p:panelGrid>
+				<p:panelGrid columns="1" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					<p:commandButton value="Zapisz" action="#{edycjaTowaruBB.zapisz()}" style="margin-right: 1em;" update="@form" />
+				</p:panelGrid>
+			</h:form>
+			
+			&nbsp;
+			
+			<h:form>
+				<p:panelGrid columns="2" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					<p:row styleClass="my-heading-row">
+            			Zmiana parametrów:
+       	 			</p:row>
+       	 			
+       	 			<p:outputLabel for="WybierzNP" value="Wybierz nazwę parametrów, którą chcesz zmienić:" />	
+							<p:selectOneMenu id="WybierzNP" value="#{edycjaTowaruBB.wybranaNP}">
+								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItems value="#{edycjaTowaruBB.list}" var="nazwaTowaru" itemLabel="#{nazwaTowaru}" itemValue="#{nazwaTowaru}"/>
+							</p:selectOneMenu>
+							
+							<p:commandButton id="submit" value="Dodaj" action="#{edycjaTowaruBB.zapisz()}"/>
+							
+				</p:panelGrid>
+			</h:form>
 		</ui:define>
 	
 	</ui:composition>
