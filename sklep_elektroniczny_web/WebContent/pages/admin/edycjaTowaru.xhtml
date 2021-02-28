@@ -16,6 +16,10 @@
 		<ui:define name="pageContent">
 
 			<h:form>
+				<p:messages id="messages" showDetail="true" closable="true">
+            		<p:autoUpdate/>
+        		</p:messages>
+        		
 				<p:panelGrid columns="2" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					
 					<p:row styleClass="my-heading-row">
@@ -58,7 +62,10 @@
 								<f:selectItems value="#{edycjaTowaruBB.list}" var="nazwaTowaru" itemLabel="#{nazwaTowaru}" itemValue="#{nazwaTowaru}"/>
 							</p:selectOneMenu>
 							
-							<p:commandButton id="submit" value="Dodaj" action="#{edycjaTowaruBB.zapisz()}"/>
+							<h:outputLabel for="wartosc" value="Wpisz wartość: " />
+							<p:inputText id="wartosc" value="#{edycjaTowaruBB.wartoscP}" required="true" requiredMessage="Podaj wartość" />
+
+							<p:commandButton id="submit" value="Zapisz szczegół" action="#{edycjaTowaruBB.zapiszSzczeg()}"/>
 							
 				</p:panelGrid>
 			</h:form>
