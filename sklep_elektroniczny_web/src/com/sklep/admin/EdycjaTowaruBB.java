@@ -13,9 +13,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.sklep.dao.NazwaParametrowDAO;
 import com.sklep.dao.TowarDAO;
+import com.sklep.dao.WartoscParametrowDAO;
 import com.sklep.entities.GrupyTowarow;
+import com.sklep.entities.NazwaParametrow;
 import com.sklep.entities.Towar;
+import com.sklep.entities.WartoscParametrow;
+import com.sklep.entities.WartoscParametrowPK;
 
 @Named
 @ViewScoped
@@ -28,6 +33,12 @@ public class EdycjaTowaruBB implements Serializable {
 	@EJB
 	TowarDAO towarDAO;
 	
+	@EJB
+	NazwaParametrowDAO nazwaParametrowDAO;
+	
+	@EJB
+	WartoscParametrowDAO wartoscParametrowDAO;
+	
 	@Inject
 	FacesContext context;
 	
@@ -35,12 +46,17 @@ public class EdycjaTowaruBB implements Serializable {
 	Flash flash;
 
 	private String wybranaNP;
+	private String wartoscP;
 	private Towar towar = new Towar();
-	private Towar loaded = null;
 	private List<String> list = new ArrayList<String>();
+	private List<NazwaParametrow> listNPObj = new ArrayList<NazwaParametrow>();
 	
 	public Towar getTowar() {
 		return towar;
+	}
+	
+	public void setTowar(Towar towar) {
+		this.towar = towar;
 	}
 	
 	public String getWybranaNP() {
@@ -51,19 +67,33 @@ public class EdycjaTowaruBB implements Serializable {
 		this.wybranaNP = wybranaNP;
 	}
 	
+	public String getWartoscP() {
+		return wartoscP;
+	}
+
+	public void setWartoscP(String wartoscP) {
+		this.wartoscP = wartoscP;
+	}
+	
+	public List<NazwaParametrow> getListNPObj() {
+		return listNPObj;
+	}
+
+	public void setListNPObj(List<NazwaParametrow> listNPObj) {
+		this.listNPObj = listNPObj;
+	}
+	
 	public void onLoad() throws IOException {
 		
-		loaded = (Towar) flash.get("towar");
-		if(loaded != null) {
-			towar = loaded;
-		} else {
+		towar = (Towar) flash.get("towar");
+		if(towar == null) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
 		}
 		
 	}
 	
 	public String zapisz() {
-		if(loaded == null) {
+		if(towar == null) {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 		
@@ -76,7 +106,7 @@ public class EdycjaTowaruBB implements Serializable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu"));
 			
 			return PAGE_STAY_AT_THE_SAME;
 		}
@@ -85,16 +115,59 @@ public class EdycjaTowaruBB implements Serializable {
 	}
 
 	public List<String> getList() {
-		Towar t = (Towar) flash.get("towar");
-		GrupyTowarow GT = t.getGrupyTowarow();
+		try {
+		GrupyTowarow GT = towar.getGrupyTowarow();
 		
-		for(int i=0; i<GT.getNazwaParametrows().size(); i++) {
-			list.add(GT.getNazwaParametrows().get(i).getNazwaParametru());
-			
+			for(int i=0; i<GT.getNazwaParametrows().size(); i++) {
+				list.add(GT.getNazwaParametrows().get(i).getNazwaParametru());
+				
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "B³êdne u¿ycie systemu"));
 		}
-		
 		return list;
 	}
 	
-	
+	public void zapiszSzczeg() {
+		List <WartoscParametrow> listWP = towar.getWartoscParametrows();
+		GrupyTowarow g = towar.getGrupyTowarow();
+		List<NazwaParametrow> npl = g.getNazwaParametrows();
+		
+		if (listWP.size()==npl.size()){
+			for (int i=0; i<listWP.size(); i++) {
+				NazwaParametrow nazwaP = listWP.get(i).getNazwaParametrow();
+				
+				if(nazwaP.getNazwaParametru().equals(wybranaNP)) {
+					WartoscParametrowPK idWPPK = listWP.get(i).getId();
+					
+					WartoscParametrow wp = wartoscParametrowDAO.get(idWPPK);
+					
+					if(wartoscP != null) {
+						wp.setWartoscParametrow(wartoscP);
+						wartoscParametrowDAO.merge(wp);
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano"));
+					} else {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu"));
+					}
+				}
+			}
+			
+		} else {
+			WartoscParametrow wp = new WartoscParametrow();
+			WartoscParametrowPK wpk = new WartoscParametrowPK();
+			
+			int NajwId = wartoscParametrowDAO.getMaxWPK();
+			
+			wpk.setIdNazwaParametrow(nazwaParametrowDAO.getObjectByName(wybranaNP).getIdnazwaParametrow());
+			wpk.setIdTowar(towar.getIdtowar());
+			wpk.setIdwartoscParametrow(NajwId);
+			
+			wp.setId(wpk);
+			wp.setWartoscParametrow(wartoscP);
+			wp.setTowar(towar);
+			wp.setNazwaParametrow(nazwaParametrowDAO.getObjectByName(wybranaNP));
+
+			wartoscParametrowDAO.insert(wp);
+		}
+	}
 }
