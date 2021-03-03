@@ -113,26 +113,6 @@ public class KontoDAO {
 		}
 	}
 	
-	public Konto getKontoFromId(int idKonto) {
-		
-		Konto k = new Konto();
-		
-		try {
-			
-			Query query = em.createQuery("from Konto k where k.idkonto=:idKonto");
-			
-			query.setParameter("idKonto", idKonto);
-			
-			k = (Konto)query.getSingleResult();
-			return k;
-
-		} catch (javax.persistence.NoResultException e) {
-			k = null;
-			
-			return k;
-		}
-	}
-	
 	public Konto getZamowienieDetails(int idKonto){
 		
 		Konto k = em.find(Konto.class, idKonto);	
