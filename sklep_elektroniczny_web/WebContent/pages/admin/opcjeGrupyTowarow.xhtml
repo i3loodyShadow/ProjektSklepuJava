@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	<ui:composition template="/templates/page-template.xhtml">
+	
+		<ui:define name="pageContent">
+		
+			<h:form>
+				<p:messages id="messages" showDetail="true" closable="true">
+            		<p:autoUpdate/>
+        		</p:messages>
+				
+				<p:panelGrid columns="3" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					                 
+					        <p:outputLabel for="nazwaGrupy" value="Nazwa Grupy Towarów (Polskie znaki, znaki specjalne oraz spacja nie są dozwolone):" />
+							<p:inputText id="nazwaGrupy" value="#{opcjeGTBB.nazwaGrupy}"
+								required="true"	requiredMessage="Podaj nazwę grupy"/>
+								
+							<p:commandButton id="submitNG" value="Dodaj" action="#{opcjeGTBB.dodajGrupe}"/>
+							
+				</p:panelGrid>
+			</h:form>
+				
+			&nbsp;
+			
+			<h:form>
+				<p:panelGrid columns="2" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					                 
+					        <p:outputLabel for="nazwaParametruGrupy" value="Wpisz nazwę dla nowego parametru grupy:" />
+							<p:inputText id="nazwaParametruGrupy" value="#{opcjeGTBB.nazwaParametruGrupy}"
+								required="true"	requiredMessage="Podaj nazwę parametrów"/>
+							
+							<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru dla, którego chcesz dodać nazwę parametru:" />	
+							<p:selectOneMenu id="WybierzGT" value="#{opcjeGTBB.wybranaGrupaTowarow}">
+								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItems value="#{opcjeGTBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
+							</p:selectOneMenu>
+	
+				</p:panelGrid>
+				
+				<p:panelGrid columns="1" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+							<p:commandButton id="submitNPG" value="Dodaj" action="#{opcjeGTBB.dodajNowaNazweParametrow}"/>
+				</p:panelGrid>
+				
+			</h:form>
+			
+			&nbsp;
+			
+			<h:form>
+				<p:panelGrid columns="2" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+				
+					<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru dla, którego chcesz dodać nazwę parametru:" />	
+							<p:selectOneMenu id="WybierzGT" value="#{opcjeGTBB.wybranaGrupaTowarow}">
+								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItems value="#{opcjeGTBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel for="WybierzNP" value="Wybierz nazwę parametru dla, wybranej grupy towarow:" />	
+							<p:selectOneMenu id="WybierzNP" value="#{opcjeGTBB.wybranaNazwaParemetru}">
+								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItems value="#{opcjeGTBB.NPList}" var="nazwaParametru" itemLabel="#{nazwaParametru}" itemValue="#{nazwaParametru}"/>
+							</p:selectOneMenu>
+				</p:panelGrid>
+				
+				<p:panelGrid columns="1" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+							<p:commandButton id="submitNPG" value="Dodaj" action="#{opcjeGTBB.dodajNazweParametrow}"/>
+				</p:panelGrid>
+			</h:form>
+			
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>
