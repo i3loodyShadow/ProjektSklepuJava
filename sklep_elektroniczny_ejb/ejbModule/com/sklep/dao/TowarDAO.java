@@ -96,7 +96,6 @@ public class TowarDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return list;
 	}
 	
@@ -109,7 +108,6 @@ public class TowarDAO {
 	}
 	
 	public Towar stworzTowar(String p, String m, GrupyTowarow g) {
-		
 		Towar t = new Towar();
 		
 		try {
@@ -122,9 +120,18 @@ public class TowarDAO {
 		} catch (Exception e) {
 			t = null;
 		}
-		
 		return t;
+	}
+	
+	public void deleteTowarById(int id) {
+		
+		try {
+			Query query = em.createQuery("delete from Towar t where t.idtowar=:idTowar");
+			query.setParameter("idTowar", id);
+			query.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
 	}
-
 }
