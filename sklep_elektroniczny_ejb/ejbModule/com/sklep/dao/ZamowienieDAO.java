@@ -19,15 +19,15 @@ public class ZamowienieDAO {
 		em.persist(zamowienie);
 	}
 
-	public Zamowienie update(Zamowienie zamowienie) {
+	public Zamowienie merge(Zamowienie zamowienie) {
 		return em.merge(zamowienie);
 	}
 
-	public void delete(Zamowienie zamowienie) {
+	public void remove(Zamowienie zamowienie) {
 		em.remove(em.merge(zamowienie));
 	}
 
-	public Zamowienie get(Object id) {
+	public Zamowienie find(Object id) {
 		return em.find(Zamowienie.class, id);
 	}
 	
@@ -55,9 +55,7 @@ public class ZamowienieDAO {
 	public void deleteZamowienieById(int id) {
 		
 		Query query = em.createQuery("delete from Zamowienie z where z.idzamowienie=:idZamowienie");
-		
 		query.setParameter("idZamowienie",id);
-		
 		query.executeUpdate();
 		
 	}
