@@ -24,6 +24,7 @@ import com.sklep.entities.Konto;
 import com.sklep.entities.Towar;
 import com.sklep.entities.TowarZamowienia;
 import com.sklep.entities.WartoscParametrow;
+import com.sklep.entities.WartoscParametrowPK;
 import com.sklep.entities.Zamowienie;
 
 @Named
@@ -115,13 +116,10 @@ public class TowarListBB {
 	public void doKoszyka(Towar towar) {
 
 		int idKonto = getIdKontoFromSession();
-		
 		int idTowar = towar.getIdtowar();
 		String producent = towar.getProducent();
 		String model = towar.getModel();
-		
-		Konto k = kontoDAO.getKontoFromId(idKonto);
-		
+		Konto k = kontoDAO.find(idKonto);
 		list = towarDAO.getTowarDetails(idTowar).getWartoscParametrows();
 		
 		for (int i = 0; i<list.size(); i++) {
@@ -129,29 +127,32 @@ public class TowarListBB {
 			WartoscParametrow test = list.get(i);
 			
 			if(test.getNazwaParametrow().getNazwaParametru().equals("Cena")) {
+				
 				String cena = test.getWartoscParametrow();
-				
 				Zamowienie z = zamowienieDAO.createZamowienie(cena,k);
-				
 				towarZamowieniaDAO.createKoszyk(cena, producent, model, z);
 			}
 		}
-		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano do koszyka"));
 	}
 	
 	public String usunProdukt(Towar towar) {
-		
 		int idKonto = getIdKontoFromSession();
-		
-		Konto k = kontoDAO.getKontoFromId(idKonto);
+		Konto k = kontoDAO.find(idKonto);
 		
 		if(k.getRola().getNazwaRoli().equals("admin")) {
 			
-			towarDAO.remove(towar);
-		
+			List<WartoscParametrow> list = towar.getWartoscParametrows();
+			
+			for(int i=0; i<list.size(); i++) {
+				
+				WartoscParametrowPK wpPK = list.get(i).getId();
+				WartoscParametrow wp = wartoscParametrowDAO.find(wpPK);
+				
+				wartoscParametrowDAO.remove(wp);	
+			}
+			towarDAO.deleteTowarById(towar.getIdtowar());
 		}
-		
 		return PAGE_SHOP;
 	}
 	
@@ -159,7 +160,6 @@ public class TowarListBB {
 			flash.put("towar", towar);
 
 		return PAGE_EDIT;
-		
 	}
 	
 	public String doSklepu() {
