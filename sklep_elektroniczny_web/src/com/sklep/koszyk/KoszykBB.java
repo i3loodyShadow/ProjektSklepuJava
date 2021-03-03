@@ -140,7 +140,7 @@ public class KoszykBB {
 		
 		int idZ = towarZamowienia.getZamowienie().getIdzamowienie();
 		
-		towarZamowieniaDAO.delete(towarZamowienia);
+		towarZamowieniaDAO.remove(towarZamowienia);
 				
 		zamowienieDAO.deleteZamowienieById(idZ);
 		
