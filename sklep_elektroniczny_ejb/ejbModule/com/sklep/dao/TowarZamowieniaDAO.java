@@ -14,19 +14,19 @@ public class TowarZamowieniaDAO {
 	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
 	
-	public void insert(TowarZamowienia towarZamowienia) {
+	public void create(TowarZamowienia towarZamowienia) {
 		em.persist(towarZamowienia);
 	}
 
-	public TowarZamowienia update(TowarZamowienia towarZamowienia) {
+	public TowarZamowienia merge(TowarZamowienia towarZamowienia) {
 		return em.merge(towarZamowienia);
 	}
 
-	public void delete(TowarZamowienia towarZamowienia) {
+	public void remove(TowarZamowienia towarZamowienia) {
 		em.remove(em.merge(towarZamowienia));
 	}
 
-	public TowarZamowienia get(Object id) {
+	public TowarZamowienia find(Object id) {
 		return em.find(TowarZamowienia.class, id);
 	}
 	
@@ -39,7 +39,7 @@ public class TowarZamowieniaDAO {
 		t.setModel(model);
 		t.setCena(cena);
 		
-		update(t);
+		merge(t);
 		
 		return t;
 	}
