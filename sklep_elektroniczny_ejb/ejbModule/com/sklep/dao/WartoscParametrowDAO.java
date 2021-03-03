@@ -17,7 +17,7 @@ public class WartoscParametrowDAO {
 	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
 	
-	public void insert(WartoscParametrow wartoscParametrow) {
+	public void create(WartoscParametrow wartoscParametrow) {
 		em.persist(wartoscParametrow);
 	}
 
@@ -25,11 +25,11 @@ public class WartoscParametrowDAO {
 		return em.merge(wartoscParametrow);
 	}
 
-	public void delete(WartoscParametrow wartoscParametrow) {
+	public void remove(WartoscParametrow wartoscParametrow) {
 		em.remove(em.merge(wartoscParametrow));
 	}
 
-	public WartoscParametrow get(Object id) {
+	public WartoscParametrow find(Object id) {
 		return em.find(WartoscParametrow.class, id);
 	}
 	
