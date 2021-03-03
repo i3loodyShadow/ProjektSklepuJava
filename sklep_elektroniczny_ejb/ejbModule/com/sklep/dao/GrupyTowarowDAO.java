@@ -17,59 +17,46 @@ public class GrupyTowarowDAO {
 	@PersistenceContext
 	EntityManager em;
 	
-	public void insert(GrupyTowarow grupyTowarow) {
+	public void create(GrupyTowarow grupyTowarow) {
 		em.persist(grupyTowarow);
 	}
 
-	public GrupyTowarow update(GrupyTowarow grupyTowarow) {
+	public GrupyTowarow merge(GrupyTowarow grupyTowarow) {
 		return em.merge(grupyTowarow);
 	}
 
-	public void delete(GrupyTowarow grupyTowarow) {
+	public void remove(GrupyTowarow grupyTowarow) {
 		em.remove(em.merge(grupyTowarow));
 	}
 
-	public GrupyTowarow get(Object id) {
+	public GrupyTowarow find(Object id) {
 		return em.find(GrupyTowarow.class, id);
 	}
 	
-	public List<NazwaParametrow> getNPList(){
-		
-		List<NazwaParametrow> np;
+	public List<String> getNGList(){
+		List<String> np;
 		
 		try {
 			
 			Query query = em.createQuery("select nazwaGrupy from GrupyTowarow g");
-			
 			np = query.getResultList();
-			return np ;
-
 		} catch (Exception e) {
 			np = null;
-			
-			return np;
 		}
-		
+		return np;
 	}
 	
 	public GrupyTowarow getGTByName(String name) {
-		
 		GrupyTowarow g = new GrupyTowarow();
 		
 		try {
 			
 			Query query = em.createQuery("from GrupyTowarow g where g.nazwaGrupy=:nazwaGrupy");
-			
 			query.setParameter("nazwaGrupy",name);
-			
 			g = (GrupyTowarow)query.getSingleResult();
-			return g ;
-
 		} catch (Exception e) {
 			g = null;
-			
-			return g;
 		}
+		return g;
 	}
-	
 }
