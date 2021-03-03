@@ -79,8 +79,6 @@ public class SzczegTowaruBB implements Serializable {
 			setMod(towar.getModel());
 			
 			list = TowarDAO.getTowarDetails(idTowaru).getWartoscParametrows();
-			
-			//System.out.println(list);
 
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu!", null));
