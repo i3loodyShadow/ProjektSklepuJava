@@ -27,7 +27,7 @@
 							<p:inputText id="model" value="#{dodawanieTowaruBB.model}"
 								required="true"	requiredMessage="Podaj model"/>        
 								
-							<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru, który chcesz dodać:" />	
+							<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru przedmiotu, który chcesz dodać:" />	
 							<p:selectOneMenu id="WybierzGT" value="#{dodawanieTowaruBB.wybranaGrupaTowarow}">
 								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
 								<f:selectItems value="#{dodawanieTowaruBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
