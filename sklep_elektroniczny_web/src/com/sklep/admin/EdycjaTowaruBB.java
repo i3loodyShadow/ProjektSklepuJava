@@ -87,7 +87,7 @@ public class EdycjaTowaruBB implements Serializable {
 		
 		towar = (Towar) flash.get("towar");
 		if(towar == null) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
 		}
 		
 	}
@@ -140,7 +140,7 @@ public class EdycjaTowaruBB implements Serializable {
 				if(nazwaP.getNazwaParametru().equals(wybranaNP)) {
 					WartoscParametrowPK idWPPK = listWP.get(i).getId();
 					
-					WartoscParametrow wp = wartoscParametrowDAO.get(idWPPK);
+					WartoscParametrow wp = wartoscParametrowDAO.find(idWPPK);
 					
 					if(wartoscP != null) {
 						wp.setWartoscParametrow(wartoscP);
@@ -167,7 +167,9 @@ public class EdycjaTowaruBB implements Serializable {
 			wp.setTowar(towar);
 			wp.setNazwaParametrow(nazwaParametrowDAO.getObjectByName(wybranaNP));
 
-			wartoscParametrowDAO.insert(wp);
+			wartoscParametrowDAO.create(wp);
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano"));
 		}
 	}
 }
