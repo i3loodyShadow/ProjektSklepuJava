@@ -129,7 +129,7 @@ public class UstawieniaKontaBB {
 		
 		idKonto = getIdKontoFromSession();
 		
-		k = kontoDAO.getKontoFromId(idKonto);
+		k = kontoDAO.find(idKonto);
 		
 		String sE = k.getEmail();
 		
@@ -142,7 +142,6 @@ public class UstawieniaKontaBB {
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu!"));
 				}
-		
 		} 
 		
 		if(!sE.equals(staryEmail)){
@@ -157,8 +156,7 @@ public class UstawieniaKontaBB {
 	public void zmienHaslo() {
 		
 		idKonto = getIdKontoFromSession();
-		
-		k = kontoDAO.getKontoFromId(idKonto);
+		k = kontoDAO.find(idKonto);
 		
 		if(k.getHaslo().equals(stareHaslo)) {
 			
@@ -172,22 +170,18 @@ public class UstawieniaKontaBB {
 	
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Stare has³o nie jest poprawne"));
-		}
-			
+		}	
 	}
 	
 	public String usunKonto() {
 		
 		idKonto = getIdKontoFromSession();
-		
 		k = kontoDAO.getZamowienieDetails(idKonto);
-		
 		list = k.getZamowienies();
 		
 		if(list.isEmpty()) {
 			
 			Logout();
-			
 			kontoDAO.remove(k);
 			
 		} else {
@@ -195,43 +189,31 @@ public class UstawieniaKontaBB {
 			for(int i=0; i<list.size(); i++) {
 				
 				Zamowienie z = list.get(i);
-				
 				listIdZ.add(z.getIdzamowienie());
-				
 			}
 			
 			for (int i = 0; i<listIdZ.size(); i++){
 				
 				tz.addAll(zamowienieDAO.getTowarZamowieniaDetails(listIdZ.get(i)).getTowarZamowienias());
-				
 			}
 			
 			for (int i=0; i<tz.size(); i++) {
 					
 				int idTZ = tz.get(i).getIdtowarZamowienia();
-				
-				TowarZamowienia towZam = towarZamowieniaDAO.get(idTZ);
-				
+				TowarZamowienia towZam = towarZamowieniaDAO.find(idTZ);
 				int idZ = towZam.getZamowienie().getIdzamowienie();
-				
-				towarZamowieniaDAO.delete(towZam);
-				
+				towarZamowieniaDAO.remove(towZam);
 				zamowienieDAO.deleteZamowienieById(idZ);
 				
 			}
-			
 			Logout();
-			
 			kontoDAO.deleteKontoById(idKonto);
-
 		}
 		return PAGE_LOGIN;
 	}
 	
 	public void Logout() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(true);
-
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		session.invalidate();
 	}
 	
