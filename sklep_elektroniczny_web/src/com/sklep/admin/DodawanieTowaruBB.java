@@ -24,7 +24,7 @@ public class DodawanieTowaruBB {
 	private String model;
 	private String wybranaGrupaTowarow;
 	
-	private List<NazwaParametrow> list;
+	private List<String> list;
 	
 	@EJB
 	TowarDAO towarDAO;
@@ -56,12 +56,12 @@ public class DodawanieTowaruBB {
 		this.wybranaGrupaTowarow = wybranaGrupaTowarow;
 	}
 	
-	public List<NazwaParametrow> getList() {
-		list = grupyTowarowDAO.getNPList();
+	public List<String> getList() {
+		list = grupyTowarowDAO.getNGList();
 		return list;
 	}
 
-	public void setList(List<NazwaParametrow> list) {
+	public void setList(List<String> list) {
 		this.list = list;
 	}
 	
