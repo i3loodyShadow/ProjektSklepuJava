@@ -2,9 +2,11 @@ package com.sklep.ustawieniaKonta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -36,7 +38,8 @@ public class UstawieniaKontaBB {
 	TowarZamowieniaDAO towarZamowieniaDAO;
 	
 	@Inject
-	FacesContext context;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	private int idKonto;
 	private String nowyEmail;
@@ -138,18 +141,18 @@ public class UstawieniaKontaBB {
 			k = kontoDAO.ustawEmail(k, nowyEmail);
 		
 				if(k != null) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano nowy E-mail"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("emailSavedSucc")));
 				} else {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu!"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("errOccWhileSav")));
 				}
 		} 
 		
 		if(!sE.equals(staryEmail)){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Stary E-mail nie jest poprawny!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("oldEmailWrong")));
 		}
 		
 		if(!nowyEmail.equals(nowyEmailPowt)){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wprowadzone adresy E-mail nie s¹ sobie równe!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("matchEmailErr")));
 		}
 	}
 	
@@ -163,13 +166,13 @@ public class UstawieniaKontaBB {
 			k = kontoDAO.ustawHaslo(k, noweHaslo);
 			
 				if(k != null) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano nowe has³o"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("passSavedSucc")));
 				} else {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapis"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("errOccWhileSav")));
 				}
 	
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Stare has³o nie jest poprawne"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("oldPassWrong")));
 		}	
 	}
 	

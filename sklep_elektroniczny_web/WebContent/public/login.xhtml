@@ -12,21 +12,21 @@
 		
 		<h:form>
  
-    		<p:panel id="basic" header="Logowanie" style="margin-bottom:20px">
+    		<p:panel id="basic" header="#{txtG.log}" style="margin-bottom:20px">
        			<h:panelGrid columns="2" cellpadding="10">
-            		<p:outputLabel for="login" value="login:" />
+            		<p:outputLabel for="login" value="#{txtG.login}" />
 					<p:inputText id="login" value="#{loginBB.login}"
-						required="true"	requiredMessage="podaj login"/>
-					<p:outputLabel for="pass" value="hasło:" />
+						required="true"	requiredMessage="#{txtG.errLogReq}"/>
+					<p:outputLabel for="pass" value="#{txtG.pass}" />
 					<p:password id="pass" value="#{loginBB.haslo}"
-						required="true"	requiredMessage="podaj hasło"/>
+						required="true"	requiredMessage="#{txtG.errPassReq}"/>
         		</h:panelGrid>
         
         		<p:messages id="mess" showDetail="true" closable="true">
         			<p:autoUpdate/>
     			</p:messages>
 		
-				<p:commandButton value="Zaloguj" icon="pi pi-angle-double-right" action="#{loginBB.doLogin()}" update="mess" />
+				<p:commandButton value="#{txtG.logIn}" icon="pi pi-angle-double-right" action="#{loginBB.doLogin()}" update="mess" />
 			
     		</p:panel>
 		

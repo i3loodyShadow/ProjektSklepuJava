@@ -3,9 +3,10 @@ package com.sklep.admin;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -38,7 +39,8 @@ public class OpcjeGTBB implements Serializable {
 	NazwaParametrowDAO nazwaParametrowDAO;
 	
 	@Inject
-	FacesContext context;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	public String getNazwaGrupy() {
 		return nazwaGrupy;
@@ -98,9 +100,9 @@ public class OpcjeGTBB implements Serializable {
 			gt.setNazwaGrupy(nazwaGrupy);
 			grupyTowarowDAO.create(gt);
 			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano grupê towaru"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("gTSavedSucc")));
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Istnieje ju¿ grupa o takiej nazwie"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("gTExist")));
 		}
 	}
 	
@@ -119,9 +121,9 @@ public class OpcjeGTBB implements Serializable {
 			
 			nazwaParametrowDAO.create(nt);
 			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano nazwê parametru"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("nPSavedSucc")));
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d","Istnieje ju¿ nazwa parametru o takiej nazwie"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("nPExist")));
 		}
 	}
 	
@@ -139,9 +141,9 @@ public class OpcjeGTBB implements Serializable {
 			
 			nazwaParametrowDAO.merge(nt);
 			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano nazwê parametru"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("nPSavedSucc")));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Dodawanie nie powiod³o siê"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("errOccWhileSav")));
 		}
 	}
 	

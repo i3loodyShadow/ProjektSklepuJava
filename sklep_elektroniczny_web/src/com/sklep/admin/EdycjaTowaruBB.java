@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -40,10 +42,11 @@ public class EdycjaTowaruBB implements Serializable {
 	WartoscParametrowDAO wartoscParametrowDAO;
 	
 	@Inject
-	FacesContext context;
+	Flash flash;
 	
 	@Inject
-	Flash flash;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 
 	private String wybranaNP;
 	private String wartoscP;
@@ -87,7 +90,7 @@ public class EdycjaTowaruBB implements Serializable {
 		
 		towar = (Towar) flash.get("towar");
 		if(towar == null) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"),  txtMsg.getString("wrongSysUsage")));
 		}
 		
 	}
@@ -106,7 +109,7 @@ public class EdycjaTowaruBB implements Serializable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("errOccWhileSav")));
 			
 			return PAGE_STAY_AT_THE_SAME;
 		}
@@ -123,7 +126,7 @@ public class EdycjaTowaruBB implements Serializable {
 				
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "B³êdne u¿ycie systemu"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("wrongSysUsage")));
 		}
 		return list;
 	}
@@ -145,9 +148,9 @@ public class EdycjaTowaruBB implements Serializable {
 					if(wartoscP != null) {
 						wp.setWartoscParametrow(wartoscP);
 						wartoscParametrowDAO.merge(wp);
-						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano"));
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("savedSucc")));
 					} else {
-						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas zapisu"));
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("errOccWhileSav")));
 					}
 				}
 			}
@@ -169,7 +172,7 @@ public class EdycjaTowaruBB implements Serializable {
 
 			wartoscParametrowDAO.create(wp);
 			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie zapisano"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("savedSucc")));
 		}
 	}
 }

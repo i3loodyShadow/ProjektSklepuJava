@@ -3,6 +3,7 @@ package com.sklep.towar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 
@@ -22,7 +23,6 @@ import com.sklep.dao.WartoscParametrowDAO;
 import com.sklep.dao.ZamowienieDAO;
 import com.sklep.entities.Konto;
 import com.sklep.entities.Towar;
-import com.sklep.entities.TowarZamowienia;
 import com.sklep.entities.WartoscParametrow;
 import com.sklep.entities.WartoscParametrowPK;
 import com.sklep.entities.Zamowienie;
@@ -36,15 +36,13 @@ public class TowarListBB {
 	private static final String PAGE_EDIT = "/pages/admin/edycjaTowaru?faces-redirect=true";
 
 	private String producent;
-		
-	@Inject
-	ExternalContext extcontext;
 	
 	@Inject
 	Flash flash;
 	
 	@Inject
-	FacesContext context;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	@EJB
 	TowarDAO towarDAO;
@@ -133,7 +131,7 @@ public class TowarListBB {
 				towarZamowieniaDAO.createKoszyk(cena, producent, model, z);
 			}
 		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano do koszyka"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("addToSCSucc")));
 	}
 	
 	public String usunProdukt(Towar towar) {

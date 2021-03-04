@@ -2,11 +2,12 @@ package com.sklep.koszyk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -38,10 +39,8 @@ public class KoszykBB {
 	Flash flash;
 	
 	@Inject
-	FacesContext context;
-	
-	@Inject
-	ExternalContext extcontext;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	@EJB
 	KontoDAO kontoDAO;
@@ -144,7 +143,7 @@ public class KoszykBB {
 				
 		zamowienieDAO.deleteZamowienieById(idZ);
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie usuniêto produkt z koszyka"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("deleteFSC")));
 		
 		return PAGE_KOSZYK;
 	}

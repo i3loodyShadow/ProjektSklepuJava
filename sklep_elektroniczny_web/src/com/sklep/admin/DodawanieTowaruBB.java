@@ -1,17 +1,19 @@
 package com.sklep.admin;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.sklep.dao.GrupyTowarowDAO;
 import com.sklep.dao.TowarDAO;
 import com.sklep.entities.GrupyTowarow;
-import com.sklep.entities.NazwaParametrow;
 import com.sklep.entities.Towar;
 
 @Named
@@ -31,6 +33,10 @@ public class DodawanieTowaruBB {
 	
 	@EJB
 	GrupyTowarowDAO grupyTowarowDAO;
+	
+	@Inject
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	public String getProducent() {
 		return producent;
@@ -75,9 +81,9 @@ public class DodawanieTowaruBB {
 		Towar t = towarDAO.stworzTowar(producent, model, g);
 		
 		if(t != null) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacja", "Pomyœlnie dodano produkt"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("addGIT")));
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", "Wyst¹pi³ b³¹d podczas dodawania produktu!"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("addGEM")));
 		}
 		
 	}

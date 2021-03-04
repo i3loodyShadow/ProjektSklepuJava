@@ -1,7 +1,10 @@
 package com.sklep.rejestracja;
 
+import java.util.ResourceBundle;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -26,11 +29,11 @@ public class RejestracjaBB {
 	private String email;
 	
 	@Inject
-	ExternalContext extcontext;
-	
-	@Inject
 	Flash flash;
 	
+	@Inject
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 	
 	public String getLogin() {
 		return login;
@@ -62,8 +65,7 @@ public class RejestracjaBB {
 		Konto loginUnique = kontoDAO.isUserUnique(login);
 		
 		if(loginUnique != null) {
-			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Login jest zajêty, proszê spróbowaæ wpisaæ inny login", null));
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("regErr")));
 			return PAGE_STAY_AT_THE_SAME;	
 		}	
 			boolean noweKonto = kontoDAO.createKonto(email, login, haslo);

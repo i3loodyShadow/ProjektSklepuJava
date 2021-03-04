@@ -1,12 +1,15 @@
 package com.sklep.login;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.simplesecurity.RemoteClient;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +20,6 @@ import com.sklep.entities.Konto;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_ADMIN = "/pages/admin/stronaAdmina?faces-redirect=true";
 	private static final String PAGE_USER = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/public/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
@@ -25,6 +27,10 @@ public class LoginBB {
 	private String login;
 	private String haslo;
 
+	@Inject
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
+	
 	public String getLogin() {
 		return login;
 	}
@@ -52,8 +58,7 @@ public class LoginBB {
 
 		// 2. if bad login or password - stay with error info
 		if (konto == null) {
-			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Niepoprawny login lub has³o", null));
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("loginErr")));
 			return PAGE_STAY_AT_THE_SAME;
 		}
 

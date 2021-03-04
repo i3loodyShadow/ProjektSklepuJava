@@ -16,7 +16,7 @@
 
 			<p:column priority="3">
 				<f:facet name="header">
-					<h:outputText value="Towary w koszyku:" />
+					<h:outputText value="#{txtUIN.inSC}" />
 				</f:facet>
 			</p:column>
 		</p:dataTable>
@@ -28,31 +28,31 @@
 
 			<p:column priority="5">
 				<f:facet name="header">
-					<h:outputText value="Producent" />
+					<h:outputText value="#{txtUIN.man}" />
 				</f:facet>
 			<h:outputText value="#{t.producent}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Model" />
+					<h:outputText value="#{txtUIN.mo}" />
 				</f:facet>
 			<h:outputText value="#{t.model}" />
 			</p:column>
 			
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Cena" />
+					<h:outputText value="#{txtUIN.price}" />
 				</f:facet>
-			<h:outputText value="#{t.cena}" />
+			<h:outputText value="#{t.cena} #{txtUIN.pln}" />
 			</p:column>
 			
 			<p:column styleClass="centeredColumnContent">
 				<f:facet name="header">
-					<h:outputText value="opcje" />
+					<h:outputText value="#{txtUIN.options}" />
 				</f:facet>
 
-				<p:commandButton style="margin:5px;" value="Usuń z koszyka"
+				<p:commandButton style="margin:5px;" value="#{txtUIN.deleteFSC}"
 					action="#{koszykBB.usunZKoszyka(t)}" update="@form" rendered="#{remoteClient.isInRole('user')}" onclomplete="javascript:window.location.reload();"/>
 
 			</p:column>
@@ -60,8 +60,8 @@
 		</h:form>
 		
 		<h5 class=" "></h5>
-    		<p:panel header="Do zapłaty" >
-        		<h:outputText value="#{koszykBB.getK()} zł" />
+    		<p:panel header="#{txtUIN.am}" >
+        		<h:outputText value="#{koszykBB.getK()} #{txtUIN.pln}" />
     		</p:panel>
     		
 		</ui:define>

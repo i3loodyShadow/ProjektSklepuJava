@@ -10,41 +10,41 @@
     <p:growl id="messages" showDetail="true"/>
  
     <p:menubar>
-        <p:menuitem value="O nas" url="http://www.primefaces.org" icon="pi pi-info" />
+        <p:menuitem value="#{txtMain.aboutUs}" url="http://www.primefaces.org" icon="pi pi-info" />
  
-        <p:menuitem value="Dlaczego my?" url="http://www.primefaces.org" icon="pi pi-question" />
+        <p:menuitem value="#{txtMain.whyUs}" url="http://www.primefaces.org" icon="pi pi-question" />
  
         <f:facet name="options">
         
-        	<p:commandButton style="margin:5px;" value="Do sklepu" 
+        	<p:commandButton style="margin:5px;" value="#{txtMain.toTheShop}" 
         		action="#{towarListBB.doSklepu()}" icon="pi pi-home"/>
         		
-        	<p:commandButton style="margin:5px;" id="DodajProdukt" rendered="#{remoteClient.isInRole('admin')}" value="Dodaj produkt" 
+        	<p:commandButton style="margin:5px;" id="DodajProdukt" rendered="#{remoteClient.isInRole('admin')}" value="#{txtMain.addProduct}" 
             	action="#{dodawanieTowaruBB.wyswietlStroneDodawania()}" icon="pi pi-plus"/>	
             	
-            <p:commandButton style="margin:5px;" id="OpcjeGrupyTowarow" rendered="#{remoteClient.isInRole('admin')}" value="Opcje grupy towarow" 
+            <p:commandButton style="margin:5px;" id="OpcjeGrupyTowarow" rendered="#{remoteClient.isInRole('admin')}" value="#{txtMain.gtOptions}" 
             	action="#{opcjeGTBB.doOpcjiGT()}" icon="pi pi-th-large"/>
         
-            <p:commandButton id="Rejestracja" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zarejestuj" 
+            <p:commandButton id="Rejestracja" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="#{txtMain.signUp}" 
             	action="#{rejestracjaBB.doRejestracji()}" icon="pi pi-user-plus"/>
             
-      		<p:commandButton id="Logowanie" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="Zaloguj" 
+      		<p:commandButton id="Logowanie" rendered="#{not (remoteClient.isInRole('admin') or remoteClient.isInRole('user'))}" value="#{txtMain.signIn}" 
       			action="#{towarListBB.login()}"  icon="pi pi-angle-double-right" style="margin:5px;"/>
       		
-      		<p:commandButton style="margin:5px;" id="Koszyk" rendered="#{remoteClient.isInRole('user')}" value="Koszyk" 
+      		<p:commandButton style="margin:5px;" id="Koszyk" rendered="#{remoteClient.isInRole('user')}" value="#{txtMain.shoppingC}" 
       			action="#{koszykBB.doKoszyka()}"  icon="pi pi-shopping-cart"/>
       			
-      		<p:commandButton style="margin:5px;" id="Ustawienia" rendered="#{(remoteClient.isInRole('admin')) or (remoteClient.isInRole('user'))}" value="Ustawienia konta" 
+      		<p:commandButton style="margin:5px;" id="Ustawienia" rendered="#{(remoteClient.isInRole('admin')) or (remoteClient.isInRole('user'))}" value="#{txtMain.accSettings}" 
       			action="#{ustawieniaKontaBB.doUstawien()}"  icon="pi pi-cog"/>
       		
-      		<p:commandButton style="margin:5px;" id="Wylogowanie" rendered="#{remoteClient.isInRole('admin') or remoteClient.isInRole('user')}" value="Wyloguj" 
+      		<p:commandButton style="margin:5px;" id="Wylogowanie" rendered="#{remoteClient.isInRole('admin') or remoteClient.isInRole('user')}" value="#{txtMain.logout}" 
       			action="#{loginBB.doLogout()}"  icon="pi pi-angle-double-left"/>
         </f:facet>
     </p:menubar>
 </h:form>
 
 <h1 class = "pageName">
-	<p class  = "pName">Sklep elektroniczny</p>		
+	<p class  = "pName">#{txtMain.pageName}</p>		
 </h1>
 	
 

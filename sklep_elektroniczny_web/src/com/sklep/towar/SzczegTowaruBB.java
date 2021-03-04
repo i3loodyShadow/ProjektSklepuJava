@@ -3,16 +3,16 @@ package com.sklep.towar;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
-
 import com.sklep.dao.TowarDAO;
 import com.sklep.entities.Towar;
 import com.sklep.entities.WartoscParametrow;
@@ -32,7 +32,8 @@ public class SzczegTowaruBB implements Serializable {
 	TowarDAO TowarDAO;
 
 	@Inject
-	FacesContext context;
+	@ManagedProperty("#{txtMsq}")
+	private ResourceBundle txtMsg;
 
 	@Inject
 	Flash flash;
@@ -81,7 +82,7 @@ public class SzczegTowaruBB implements Serializable {
 			list = TowarDAO.getTowarDetails(idTowaru).getWartoscParametrows();
 
 		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, txtMsg.getString("err"), txtMsg.getString("wrongSysUsage")));
 		}
 	}
 

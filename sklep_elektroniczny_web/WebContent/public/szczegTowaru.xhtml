@@ -21,14 +21,14 @@
 
 			<p:column priority="3">
 				<f:facet name="header">
-					<h:outputText value="Producent" />
+					<h:outputText value="#{txtG.prod}" />
 				</f:facet>
 				<h:outputText value="#{szczegTowaruBB.towar.producent}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Model" />
+					<h:outputText value="#{txtG.mo}" />
 				</f:facet>
 				<h:outputText value="#{szczegTowaruBB.towar.model}" />
 			</p:column>
@@ -41,14 +41,14 @@
 
 			<p:column priority="5">
 				<f:facet name="header">
-					<h:outputText value="Nazwa Parametru" />
+					<h:outputText value="#{txtG.paramName}" />
 				</f:facet>
 				<h:outputText value="#{w.nazwaParametrow.nazwaParametru}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Wartosci Parametrów" />
+					<h:outputText value="#{txtG.paramVal}" />
 				</f:facet>
 				<h:outputText value="#{w.wartoscParametrow}" />
 			</p:column>

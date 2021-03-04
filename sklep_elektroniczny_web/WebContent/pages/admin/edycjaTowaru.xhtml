@@ -23,28 +23,28 @@
 				<p:panelGrid columns="2" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					
 					<p:row styleClass="my-heading-row">
-            			Zmiana podstawowych danych:
+            			#{txtA.changeBI}
        	 			</p:row>
 					
-					<h:outputLabel for="producent" value="Producent:" />
+					<h:outputLabel for="producent" value="#{txtA.prod}" />
 					<p:inputText id="producent" value="#{edycjaTowaruBB.towar.producent}"
-						required="true" requiredMessage="Podaj producenta"
-						validatorMessage="Najwyżej 15 znaków">
+						required="true" requiredMessage="#{txtA.errProdReq}"
+						validatorMessage="#{txtA.maxLen}">
 						<f:validateLength maximum="15" />
 					</p:inputText>
 					<p:message for="producent" display="icon"/>
 	
-					<h:outputLabel for="model" value="Model:" />
+					<h:outputLabel for="model" value="#{txtA.mo}" />
 					<p:inputText id="model" value="#{edycjaTowaruBB.towar.model}"
-						required="true" requiredMessage="Podaj model"
-						validatorMessage="Najwyżej 15 znaków">
+						required="true" requiredMessage="#{txtA.errMoReq}"
+						validatorMessage="#{txtA.maxLen}">
 						<f:validateLength maximum="15" />
 					</p:inputText>
 					<p:message for="model" display="icon"/>
 	
 				</p:panelGrid>
 				<p:panelGrid columns="1" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
-					<p:commandButton value="Zapisz" action="#{edycjaTowaruBB.zapisz()}" style="margin-right: 1em;" update="@form" />
+					<p:commandButton value="#{txtA.save}" action="#{edycjaTowaruBB.zapisz()}" style="margin-right: 1em;" update="@form" />
 				</p:panelGrid>
 			</h:form>
 			
@@ -53,19 +53,19 @@
 			<h:form>
 				<p:panelGrid columns="2" layout="flex" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					<p:row styleClass="my-heading-row">
-            			Zmiana parametrów:
+            			#{txtA.changeParam}
        	 			</p:row>
        	 			
-       	 			<p:outputLabel for="WybierzNP" value="Wybierz nazwę parametrów, którą chcesz zmienić:" />	
+       	 			<p:outputLabel for="WybierzNP" value="#{txtA.chooseNP}" />	
 							<p:selectOneMenu id="WybierzNP" value="#{edycjaTowaruBB.wybranaNP}">
-								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{edycjaTowaruBB.list}" var="nazwaTowaru" itemLabel="#{nazwaTowaru}" itemValue="#{nazwaTowaru}"/>
 							</p:selectOneMenu>
 							
-							<h:outputLabel for="wartosc" value="Wpisz wartość: " />
-							<p:inputText id="wartosc" value="#{edycjaTowaruBB.wartoscP}" required="true" requiredMessage="Podaj wartość" />
+							<h:outputLabel for="wartosc" value="#{txtA.inputVal}" />
+							<p:inputText id="wartosc" value="#{edycjaTowaruBB.wartoscP}" required="true" requiredMessage="#{txtA.valErrReq}" />
 
-							<p:commandButton id="submit" value="Zapisz szczegół" action="#{edycjaTowaruBB.zapiszSzczeg()}"/>
+							<p:commandButton id="submit" value="#{txtA.saveDet}" action="#{edycjaTowaruBB.zapiszSzczeg()}"/>
 							
 				</p:panelGrid>
 			</h:form>

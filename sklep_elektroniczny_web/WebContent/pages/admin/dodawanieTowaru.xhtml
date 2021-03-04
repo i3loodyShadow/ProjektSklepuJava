@@ -19,21 +19,21 @@
 					    <p:panelGrid columns="2" layout="grid"
 					                 styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					                 
-					        <p:outputLabel for="producent" value="Producent:" />
+					        <p:outputLabel for="producent" value="#{txtA.prod}" />
 							<p:inputText id="producent" value="#{dodawanieTowaruBB.producent}"
-								required="true"	requiredMessage="Podaj producenta"/>  
+								required="true"	requiredMessage="#{txtA.errProdReq}"/>  
 								
-							<p:outputLabel for="model" value="Model:" />
+							<p:outputLabel for="model" value="#{txtA.mo}" />
 							<p:inputText id="model" value="#{dodawanieTowaruBB.model}"
-								required="true"	requiredMessage="Podaj model"/>        
+								required="true"	requiredMessage="#{txtA.errMoReq}"/>        
 								
-							<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru przedmiotu, który chcesz dodać:" />	
+							<p:outputLabel for="WybierzGT" value="#{txtA.chooseGT}" />	
 							<p:selectOneMenu id="WybierzGT" value="#{dodawanieTowaruBB.wybranaGrupaTowarow}">
-								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{dodawanieTowaruBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
 							</p:selectOneMenu>
 							
-					        <p:commandButton id="submit" value="Dodaj" action="#{dodawanieTowaruBB.dodajProdukt()}"/>
+					        <p:commandButton id="submit" value="#{txtA.add}" action="#{dodawanieTowaruBB.dodajProdukt()}"/>
 					        
 					    </p:panelGrid>
 				</div>

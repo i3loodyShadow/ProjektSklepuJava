@@ -14,16 +14,16 @@
             <p:autoUpdate/>
         </p:messages>
 		
-		<p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true">
+		<p:panel header="#{txtG.searEng}" toggleable="true" collapsed="true">
 		
 		<h:form>
 		
 			<h:panelGrid columns="2" cellpadding="5">
 			
 				<h:outputLabel 
-							value="producent:" />
+							value="#{txtG.prod}" />
 				<p:inputText value="#{towarListBB.producent}" />
-				<p:commandButton value="Szukaj" update="form-table" />
+				<p:commandButton value="#{txtG.search}" update="form-table" />
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
@@ -36,33 +36,33 @@
 
 			<p:column priority="5">
 				<f:facet name="header">
-					<h:outputText value="producent" />
+					<h:outputText value="#{txtG.prod}" />
 				</f:facet>
 				<h:outputText value="#{t.producent}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="model" />
+					<h:outputText value="#{txtG.mo}" />
 				</f:facet>
 				<h:outputText value="#{t.model}" />
 			</p:column>
 
 			<p:column styleClass="centeredColumnContent">
 				<f:facet name="header">
-					<h:outputText value="opcje" />
+					<h:outputText value="#{txtG.opt}" />
 				</f:facet>
 
-				<p:commandButton value="Szczegóły" 
+				<p:commandButton value="#{txtG.det}" 
 					action="#{towarListBB.szczegTowar(t)}" />
 
-				<p:commandButton style="margin:5px;" value="Dodaj do koszyka"
+				<p:commandButton style="margin:5px;" value="#{txtG.addToSC}"
 					action="#{towarListBB.doKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
 					
-				<p:commandButton style="margin:5px;" value="Edytuj"
+				<p:commandButton style="margin:5px;" value="#{txtG.edit}"
 					action="#{towarListBB.edytujTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
 					
-				<p:commandButton value="Usuń"
+				<p:commandButton value="#{txtG.del}"
 					action="#{towarListBB.usunProdukt(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
 
 			</p:column>

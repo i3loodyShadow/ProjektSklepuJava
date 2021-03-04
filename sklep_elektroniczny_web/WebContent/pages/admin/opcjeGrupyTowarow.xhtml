@@ -17,11 +17,11 @@
 				
 				<p:panelGrid columns="3" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					                 
-					        <p:outputLabel for="nazwaGrupy" value="Nazwa Grupy Towarów (Polskie znaki, znaki specjalne oraz spacja nie są dozwolone):" />
+					        <p:outputLabel for="nazwaGrupy" value="#{txtA.inpGT}" />
 							<p:inputText id="nazwaGrupy" value="#{opcjeGTBB.nazwaGrupy}"
-								required="true"	requiredMessage="Podaj nazwę grupy"/>
+								required="true"	requiredMessage="#{txtA.errGTReq}"/>
 								
-							<p:commandButton id="submitNG" value="Dodaj" action="#{opcjeGTBB.dodajGrupe}"/>
+							<p:commandButton id="submitNG" value="#{txtA.add}" action="#{opcjeGTBB.dodajGrupe}"/>
 							
 				</p:panelGrid>
 			</h:form>
@@ -31,20 +31,20 @@
 			<h:form>
 				<p:panelGrid columns="2" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					                 
-					        <p:outputLabel for="nazwaParametruGrupy" value="Wpisz nazwę dla nowego parametru grupy:" />
+					        <p:outputLabel for="nazwaParametruGrupy" value="#{txtA.nameNP}" />
 							<p:inputText id="nazwaParametruGrupy" value="#{opcjeGTBB.nazwaParametruGrupy}"
-								required="true"	requiredMessage="Podaj nazwę parametrów"/>
+								required="true"	requiredMessage="#{txtA.errNPReq}"/>
 							
-							<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru dla, którego chcesz dodać nazwę parametru:" />	
+							<p:outputLabel for="WybierzGT" value="#{txtA.chooseGTL}" />	
 							<p:selectOneMenu id="WybierzGT" value="#{opcjeGTBB.wybranaGrupaTowarow}">
-								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{opcjeGTBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
 							</p:selectOneMenu>
 	
 				</p:panelGrid>
 				
 				<p:panelGrid columns="1" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
-							<p:commandButton id="submitNPG" value="Dodaj" action="#{opcjeGTBB.dodajNowaNazweParametrow}"/>
+							<p:commandButton id="submitNPG" value="#{txtA.add}" action="#{opcjeGTBB.dodajNowaNazweParametrow}"/>
 				</p:panelGrid>
 				
 			</h:form>
@@ -54,21 +54,21 @@
 			<h:form>
 				<p:panelGrid columns="2" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 				
-					<p:outputLabel for="WybierzGT" value="Wybierz grupę towaru dla, którego chcesz dodać nazwę parametru:" />	
+					<p:outputLabel for="WybierzGT" value="#{txtA.chooseGTtoNP}" />	
 							<p:selectOneMenu id="WybierzGT" value="#{opcjeGTBB.wybranaGrupaTowarow}">
-								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{opcjeGTBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
 							</p:selectOneMenu>
 							
-							<p:outputLabel for="WybierzNP" value="Wybierz nazwę parametru dla, wybranej grupy towarow:" />	
+							<p:outputLabel for="WybierzNP" value="#{txtA.chooseNPtoGT}" />	
 							<p:selectOneMenu id="WybierzNP" value="#{opcjeGTBB.wybranaNazwaParemetru}">
-								<f:selectItem itemValue="#{null}" itemLabel="-- Wybierz jedno --" />
+								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{opcjeGTBB.NPList}" var="nazwaParametru" itemLabel="#{nazwaParametru}" itemValue="#{nazwaParametru}"/>
 							</p:selectOneMenu>
 				</p:panelGrid>
 				
 				<p:panelGrid columns="1" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
-							<p:commandButton id="submitNPG" value="Dodaj" action="#{opcjeGTBB.dodajNazweParametrow}"/>
+							<p:commandButton id="submitNPG" value="#{txtA.add}" action="#{opcjeGTBB.dodajNazweParametrow}"/>
 				</p:panelGrid>
 			</h:form>
 			
