@@ -48,6 +48,8 @@ public class TowarDAO {
 		List<Towar> list = null;
 
 		Query query = em.createQuery("select p from Towar p");
+		query.setFirstResult(1);
+		query.setMaxResults(5);
 
 		try {
 			list = query.getResultList();

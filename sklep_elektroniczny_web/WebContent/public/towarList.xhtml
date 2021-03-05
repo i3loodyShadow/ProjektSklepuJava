@@ -23,16 +23,17 @@
 				<h:outputLabel 
 							value="#{txtG.prod}" />
 				<p:inputText value="#{towarListBB.producent}" />
-				<p:commandButton value="#{txtG.search}" update="form-table" />
+				<p:commandButton value="#{txtG.search}" update="testPaginacji" />
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
 
 	<p:messages />
-
-	<h:form id="form-table" style ="margin-left: 3.5em; margin-right: 3.5em;">
-
-		<p:dataTable value="#{towarListBB.list}" var="t">
+	
+	<h:form id="testPaginacji" style ="margin-left: 3.5em; margin-right: 3.5em;">
+		<p:dataTable value="#{towarListBB.lazyModel}" var="t" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15"	>
 
 			<p:column priority="5">
 				<f:facet name="header">

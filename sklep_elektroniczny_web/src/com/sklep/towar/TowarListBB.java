@@ -1,20 +1,23 @@
 package com.sklep.towar;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.enterprise.context.RequestScoped;
+
+import org.primefaces.model.LazyDataModel;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.view.ViewScoped;
 
 import com.sklep.dao.KontoDAO;
 import com.sklep.dao.TowarDAO;
@@ -28,14 +31,17 @@ import com.sklep.entities.WartoscParametrowPK;
 import com.sklep.entities.Zamowienie;
 
 @Named
-@RequestScoped
-public class TowarListBB {
+@ViewScoped
+public class TowarListBB implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private static final String PAGE_SZCZEG = "/public/szczegTowaru?faces-redirect=true";
 	private static final String PAGE_SHOP = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_EDIT = "/pages/admin/edycjaTowaru?faces-redirect=true";
 
 	private String producent;
+	private List<WartoscParametrow> list;
+	private LazyDataModel<Towar> lazyModel;
 	
 	@Inject
 	Flash flash;
@@ -59,7 +65,18 @@ public class TowarListBB {
 	@EJB
 	TowarZamowieniaDAO towarZamowieniaDAO;
 	
-	private List<WartoscParametrow> list;
+	@PostConstruct
+	public void init() {
+		lazyModel = new LazyTowarDataModel(towarDAO.getFullList());
+	}
+	
+	public LazyDataModel<Towar> getLazyModel() {
+		return lazyModel;
+	}
+
+	public void setLazyModel(LazyDataModel<Towar> lazyModel) {
+		this.lazyModel = lazyModel;
+	}
 		
 	public String getProducent() {
 		return producent;
@@ -90,12 +107,10 @@ public class TowarListBB {
 	}
 	
 	public String login() {
-		
 		return PAGE_LOGIN;
 	}
 
 	public String szczegTowar(Towar towar){
-
 		flash.put("towar", towar);
 		
 		return PAGE_SZCZEG;
