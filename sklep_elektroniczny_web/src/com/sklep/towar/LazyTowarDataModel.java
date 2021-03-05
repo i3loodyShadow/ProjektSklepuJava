@@ -1,5 +1,6 @@
 package com.sklep.towar;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +14,14 @@ import com.sklep.entities.Towar;
 public class LazyTowarDataModel extends LazyDataModel<Towar>{
 	
 	private List<Towar> datasource;
+	
+	public List<Towar> getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(List<Towar> datasourcee) {
+		this.datasource = datasourcee;
+	}
 
     public LazyTowarDataModel(List<Towar> datasource) {
         this.datasource = datasource;
@@ -20,19 +29,21 @@ public class LazyTowarDataModel extends LazyDataModel<Towar>{
     
 	@Override
     public List<Towar> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		//naprawiæ w jakiœ sposób ten kod (prawdopodobnie dostosowaæ go do moich potrzeb a nie korzystaæ z tego co by³o w primefaces)
-        long rowCount = datasource.stream()
-               .count();
-
-	    // apply offset
-        List<Towar> towar = datasource.stream()
-	           .skip(offset)
-	           .limit(pageSize)
-	           .collect(Collectors.toList());
-
-	   // rowCount
-       setRowCount((int) rowCount);
-
-       return towar;
+		int rowCount = 0;
+		for(int i=0;i<datasource.size();i++) {
+			if(i==datasource.size()-1) {
+				rowCount = i;
+			}
+		}
+		
+		List<Towar> towarList = new ArrayList<Towar>();
+		towarList = (List<Towar>) datasource.stream()
+				.skip(offset)
+				.limit(pageSize)
+				.collect(Collectors.toList());
+		
+		setRowCount((int) rowCount);
+		
+		return towarList;
 	}
 }

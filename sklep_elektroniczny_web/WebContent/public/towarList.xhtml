@@ -31,9 +31,9 @@
 	<p:messages />
 	
 	<h:form id="testPaginacji" style ="margin-left: 3.5em; margin-right: 3.5em;">
-		<p:dataTable value="#{towarListBB.lazyModel}" var="t" paginator="true" rows="10"
+		<p:dataTable var="t" value="#{towarListBB.lazyModel}" paginator="true" rows="10"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rowsPerPageTemplate="5,10,15"	>
+                     rowsPerPageTemplate="5,10,15" lazy="true">
 
 			<p:column priority="5">
 				<f:facet name="header">
