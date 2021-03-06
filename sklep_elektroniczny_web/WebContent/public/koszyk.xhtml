@@ -24,7 +24,9 @@
 		
 		<h:form id="koszyk" style ="margin-left: 3.5em; margin-right: 3.5em;">
 
-		<p:dataTable value="#{koszykBB.tz}" var="t">
+		<p:dataTable value="#{koszykBB.lazyModel}" var="t" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" lazy="true">
 
 			<p:column priority="5">
 				<f:facet name="header">
@@ -53,13 +55,13 @@
 				</f:facet>
 
 				<p:commandButton style="margin:5px;" value="#{txtUIN.deleteFSC}"
-					action="#{koszykBB.usunZKoszyka(t)}" update="@form" rendered="#{remoteClient.isInRole('user')}" onclomplete="javascript:window.location.reload();"/>
+					action="#{koszykBB.usunZKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
 
 			</p:column>
 		</p:dataTable>
 		</h:form>
 		
-		<h5 class=" "></h5>
+		<h5></h5>
     		<p:panel header="#{txtUIN.am}" >
         		<h:outputText value="#{koszykBB.getK()} #{txtUIN.pln}" />
     		</p:panel>

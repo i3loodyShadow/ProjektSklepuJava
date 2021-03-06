@@ -35,7 +35,7 @@ public class DodawanieTowaruBB {
 	GrupyTowarowDAO grupyTowarowDAO;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	public String getProducent() {

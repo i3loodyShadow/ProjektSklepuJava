@@ -28,7 +28,7 @@ public class LoginBB {
 	private String haslo;
 
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	public String getLogin() {

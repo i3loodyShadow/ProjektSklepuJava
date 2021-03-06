@@ -32,7 +32,7 @@ public class SzczegTowaruBB implements Serializable {
 	TowarDAO TowarDAO;
 
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 
 	@Inject

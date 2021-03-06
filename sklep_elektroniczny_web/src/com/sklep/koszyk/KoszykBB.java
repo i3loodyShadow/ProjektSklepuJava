@@ -1,29 +1,36 @@
 package com.sklep.koszyk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.model.LazyDataModel;
 
 import com.sklep.dao.KontoDAO;
 import com.sklep.dao.TowarZamowieniaDAO;
 import com.sklep.dao.ZamowienieDAO;
 import com.sklep.entities.TowarZamowienia;
 import com.sklep.entities.Zamowienie;
+import com.sklep.lazy.LazyTowarZamowieniaDataModel;
 
 @Named
-@RequestScoped
-public class KoszykBB {
+@ViewScoped
+public class KoszykBB implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	private static final String PAGE_KOSZYK = "/public/koszyk?faces-redirect=true";
 	
 	private String prod;
@@ -34,12 +41,13 @@ public class KoszykBB {
 	private List<Zamowienie> list;
 	private List<Integer> listIdZ = new ArrayList<Integer>();
 	private List<TowarZamowienia> tz = new ArrayList<TowarZamowienia>();
+	private LazyDataModel<TowarZamowienia> lazyModel;
 	
 	@Inject
 	Flash flash;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	@EJB
@@ -97,6 +105,19 @@ public class KoszykBB {
 		return k;
 	}
 	
+	public LazyDataModel<TowarZamowienia> getLazyModel() {
+		return lazyModel;
+	}
+
+	public void setLazyModel(LazyDataModel<TowarZamowienia> lazyModel) {
+		this.lazyModel = lazyModel;
+	}
+	
+	@PostConstruct
+	public void init() {
+		lazyModel = new LazyTowarZamowieniaDataModel(getTz());
+	}
+	
 	public int getIdKontoFromSession() {
 		
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -130,9 +151,7 @@ public class KoszykBB {
 			k = k + Integer.parseInt(koszt);
 			
 		}
-		
 		return tz;
-
 	}
 	
 	public String usunZKoszyka(TowarZamowienia towarZamowienia) {
@@ -143,13 +162,10 @@ public class KoszykBB {
 				
 		zamowienieDAO.deleteZamowienieById(idZ);
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, txtMsg.getString("info"), txtMsg.getString("deleteFSC")));
-		
 		return PAGE_KOSZYK;
 	}
 
 	public String doKoszyka() {
 		return PAGE_KOSZYK;
 	}
-	
 }

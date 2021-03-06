@@ -29,11 +29,13 @@ import com.sklep.entities.Towar;
 import com.sklep.entities.WartoscParametrow;
 import com.sklep.entities.WartoscParametrowPK;
 import com.sklep.entities.Zamowienie;
+import com.sklep.lazy.LazyTowarDataModel;
 
 @Named
 @ViewScoped
 public class TowarListBB implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	private static final String PAGE_SZCZEG = "/public/szczegTowaru?faces-redirect=true";
 	private static final String PAGE_SHOP = "/public/towarList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
@@ -47,7 +49,7 @@ public class TowarListBB implements Serializable{
 	Flash flash;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	@EJB
@@ -91,19 +93,24 @@ public class TowarListBB implements Serializable{
 	}
 
 	public List<Towar> getList(){
-		List<Towar> list = null;
 		
-		//1. Prepare search params
-		Map<String,Object> searchParams = new HashMap<String, Object>();
-		
-		if (producent != null && producent.length() > 0){
-			searchParams.put("producent", producent);
+		if(producent.isEmpty() || producent.equals("")) {
+			return towarDAO.getFullList();
+		} else {
+			List<Towar> list = null;
+			
+			//1. Prepare search params
+			Map<String,Object> searchParams = new HashMap<String, Object>();
+			
+			if (producent != null && producent.length() > 0){
+				searchParams.put("producent", producent);
+			}
+			
+			//2. Get list
+			list = towarDAO.getList(searchParams);
+			
+			return list;
 		}
-		
-		//2. Get list
-		list = towarDAO.getList(searchParams);
-		
-		return list;
 	}
 	
 	public String login() {

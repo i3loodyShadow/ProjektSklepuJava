@@ -32,7 +32,7 @@ public class RejestracjaBB {
 	Flash flash;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	public String getLogin() {

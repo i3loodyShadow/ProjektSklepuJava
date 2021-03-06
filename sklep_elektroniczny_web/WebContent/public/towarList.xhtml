@@ -23,7 +23,7 @@
 				<h:outputLabel 
 							value="#{txtG.prod}" />
 				<p:inputText value="#{towarListBB.producent}" />
-				<p:commandButton value="#{txtG.search}" update="testPaginacji" />
+				<p:commandButton value="#{txtG.search}" update=":testPaginacji:towar" />
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
@@ -33,8 +33,10 @@
 	<h:form id="testPaginacji" style ="margin-left: 3.5em; margin-right: 3.5em;">
 		<p:dataTable var="t" value="#{towarListBB.lazyModel}" paginator="true" rows="10"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rowsPerPageTemplate="5,10,15" lazy="true">
-
+                     rowsPerPageTemplate="5,10,15" lazy="true" id="towar">
+            <p:column headerText="Test" filterBy="#{customer.name}">
+                <h:outputText value="#{customer.name}"/>
+            </p:column>
 			<p:column priority="5">
 				<f:facet name="header">
 					<h:outputText value="#{txtG.prod}" />

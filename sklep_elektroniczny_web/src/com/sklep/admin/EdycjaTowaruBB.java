@@ -45,7 +45,7 @@ public class EdycjaTowaruBB implements Serializable {
 	Flash flash;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 
 	private String wybranaNP;

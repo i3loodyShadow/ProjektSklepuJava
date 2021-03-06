@@ -38,7 +38,7 @@ public class UstawieniaKontaBB {
 	TowarZamowieniaDAO towarZamowieniaDAO;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	private int idKonto;

@@ -39,7 +39,7 @@ public class OpcjeGTBB implements Serializable {
 	NazwaParametrowDAO nazwaParametrowDAO;
 	
 	@Inject
-	@ManagedProperty("#{txtMsq}")
+	@ManagedProperty("#{txtMsg}")
 	private ResourceBundle txtMsg;
 	
 	public String getNazwaGrupy() {
