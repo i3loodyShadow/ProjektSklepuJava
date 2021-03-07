@@ -25,8 +25,8 @@ public class LazyTowarDataModel extends LazyDataModel<Towar>{
 		return datasource;
 	}
 
-	public void setDatasource(List<Towar> datasourcee) {
-		this.datasource = datasourcee;
+	public void setDatasource(List<Towar> datasource) {
+		this.datasource = datasource;
 	}
 
     public LazyTowarDataModel(List<Towar> datasource) {
@@ -51,27 +51,27 @@ public class LazyTowarDataModel extends LazyDataModel<Towar>{
     
 	@Override
     public List<Towar> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		
-		int rowCount = 0;
-		for(int i=0;i<datasource.size();i++) {
-			if(i==datasource.size()-1) {
-				rowCount = i;
-			}
-		}
-		
 		List<Towar> towarList = new ArrayList<Towar>();
-		towarList = (List<Towar>) datasource.stream()
-				.skip(offset)
-				.filter(o -> filter(FacesContext.getCurrentInstance(), filterBy.values(), o))
-				.limit(pageSize)
-				.collect(Collectors.toList());
-		
-		setRowCount((int) rowCount);
-		
-		return towarList;
+		int rowCount = 0;
+		if(datasource.size()>0) {
+			rowCount = datasource.size();
+			
+			
+			towarList = (List<Towar>) datasource.stream()
+					.skip(offset)
+					.limit(pageSize)
+					.collect(Collectors.toList());
+
+			setRowCount((int) rowCount);
+			
+			return towarList;
+		} else {
+			towarList = null;
+			return towarList;
+		}
 	}
 	
-	private boolean filter(FacesContext context, Collection<FilterMeta> filterBy, Object o) {
+/*	private boolean filter(FacesContext context, Collection<FilterMeta> filterBy, Object o) {
         boolean matching = true;
 
         for (FilterMeta filter : filterBy) {
@@ -79,7 +79,7 @@ public class LazyTowarDataModel extends LazyDataModel<Towar>{
             Object filterValue = filter.getFilterValue();
 
             try {
-                Object columnValue = String.valueOf(o.getClass().getField(filter.getField()).get(o));
+                Object columnValue = String.valueOf(o.getClass().getField(filter.getFilterField()).get(o));
                 matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
             } catch (ReflectiveOperationException e) {
                 matching = false;
@@ -92,5 +92,5 @@ public class LazyTowarDataModel extends LazyDataModel<Towar>{
 
         return matching;
     }
-
+*/
 }

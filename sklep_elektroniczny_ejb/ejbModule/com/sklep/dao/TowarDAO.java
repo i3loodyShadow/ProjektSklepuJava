@@ -11,7 +11,6 @@ import javax.persistence.Query;
 
 import com.sklep.entities.GrupyTowarow;
 import com.sklep.entities.Towar;
-import com.sklep.dao.GrupyTowarowDAO;
 
 //DAO - Data Access Object for Person entity
 //Designed to serve as an interface between higher layers of application and data.
@@ -62,33 +61,28 @@ public class TowarDAO {
 		List<Towar> list = null;
 
 		// 1. Build query string with parameters
-		String select = "select p ";
-		String from = "from Towar p ";
+		String from = "from Towar t ";
 		String where = "";
-		String orderby = "order by p.idtowar asc, p.producent";
+		String orderby = "order by t.idtowar asc";
 
 		// search for producent
-		String producent = (String) searchParams.get("producent");
-		if (producent != null) {
+		String fraza = (String) searchParams.get("fraza");
+		if (fraza != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
 				where += "and ";
 			}
-			where += "p.producent like :producent ";
+			where += "t.producent like :fraza ";
 		}
-		
-		// ... other parameters ... 
 
 		// 2. Create query object
-		Query query = em.createQuery(select + from + where + orderby);
+		Query query = em.createQuery(from + where + orderby);
 
 		// 3. Set configured parameters
-		if (producent != null) {
-			query.setParameter("producent", producent+"%");
+		if (fraza != null) {
+			query.setParameter("fraza", "%"+fraza+"%");
 		}
-
-		// ... other parameters ... 
 
 		// 4. Execute query and retrieve list of Towar objects
 		try {
@@ -96,6 +90,23 @@ public class TowarDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		if (list.isEmpty()) {
+			where = "where t.model like :fraza ";
+			
+			query = em.createQuery(from + where + orderby);
+			
+			query.setParameter("fraza", "%"+fraza+"%");
+			
+			try {
+				list = query.getResultList();
+				
+				System.out.println(list);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return list;
 	}
 	

@@ -41,7 +41,7 @@ public class TowarListBB implements Serializable{
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_EDIT = "/pages/admin/edycjaTowaru?faces-redirect=true";
 
-	private String producent;
+	private String fraza;
 	private List<WartoscParametrow> list;
 	private LazyDataModel<Towar> lazyModel;
 	
@@ -69,7 +69,7 @@ public class TowarListBB implements Serializable{
 	
 	@PostConstruct
 	public void init() {
-		lazyModel = new LazyTowarDataModel(towarDAO.getFullList());
+		lazyModel = new LazyTowarDataModel(getFullList());
 	}
 	
 	public LazyDataModel<Towar> getLazyModel() {
@@ -80,37 +80,40 @@ public class TowarListBB implements Serializable{
 		this.lazyModel = lazyModel;
 	}
 		
-	public String getProducent() {
-		return producent;
+	public String getFraza() {
+		return fraza;
 	}
 
-	public void setProducent(String producent) {
-		this.producent = producent;
+	public void setFraza(String fraza) {
+		this.fraza = fraza;
 	}
 
 	public List<Towar> getFullList(){
-		return towarDAO.getFullList();
-	}
-
-	public List<Towar> getList(){
+		List<Towar> listT = (List<Towar>) flash.get("lista");
 		
-		if(producent.isEmpty() || producent.equals("")) {
+		if(listT == null){
 			return towarDAO.getFullList();
 		} else {
-			List<Towar> list = null;
-			
-			//1. Prepare search params
-			Map<String,Object> searchParams = new HashMap<String, Object>();
-			
-			if (producent != null && producent.length() > 0){
-				searchParams.put("producent", producent);
-			}
-			
-			//2. Get list
-			list = towarDAO.getList(searchParams);
-			
-			return list;
+			return listT;
 		}
+	}
+
+	public String getList(){
+		List<Towar> list = null;
+			
+		//1. Prepare search params
+		Map<String,Object> searchParams = new HashMap<String, Object>();
+			
+		if (fraza != null && fraza.length() > 0){
+			searchParams.put("fraza", fraza);
+		}
+			
+		//2. Get list
+		list = towarDAO.getList(searchParams);
+		
+		flash.put("lista", list);
+			
+		return PAGE_SHOP;	
 	}
 	
 	public String login() {

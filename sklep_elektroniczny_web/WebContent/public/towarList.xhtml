@@ -14,63 +14,57 @@
             <p:autoUpdate/>
         </p:messages>
 		
-		<p:panel header="#{txtG.searEng}" toggleable="true" collapsed="true">
-		
+	<p:panel header="#{txtG.searEng}" toggleable="true" collapsed="true">
 		<h:form>
-		
-			<h:panelGrid columns="2" cellpadding="5">
-			
-				<h:outputLabel 
-							value="#{txtG.prod}" />
-				<p:inputText value="#{towarListBB.producent}" />
-				<p:commandButton value="#{txtG.search}" update=":testPaginacji:towar" />
-			</h:panelGrid>
+			<p:panelGrid columns="3" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+				<h:outputLabel value="#{txtG.phrase}" />
+				<p:inputText value="#{towarListBB.fraza}" style="margin:5px;"/>
+				<p:commandButton value="#{txtG.search}" action="#{towarListBB.getList()}"/>
+			</p:panelGrid>
 		</h:form>
 	</p:panel>
-
-	<p:messages />
+	
+	&nbsp;
 	
 	<h:form id="testPaginacji" style ="margin-left: 3.5em; margin-right: 3.5em;">
-		<p:dataTable var="t" value="#{towarListBB.lazyModel}" paginator="true" rows="10"
-                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rowsPerPageTemplate="5,10,15" lazy="true" id="towar">
-            <p:column headerText="Test" filterBy="#{customer.name}">
-                <h:outputText value="#{customer.name}"/>
-            </p:column>
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="#{txtG.prod}" />
-				</f:facet>
-				<h:outputText value="#{t.producent}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="#{txtG.mo}" />
-				</f:facet>
-				<h:outputText value="#{t.model}" />
-			</p:column>
-
-			<p:column styleClass="centeredColumnContent">
-				<f:facet name="header">
-					<h:outputText value="#{txtG.opt}" />
-				</f:facet>
-
-				<p:commandButton value="#{txtG.det}" 
-					action="#{towarListBB.szczegTowar(t)}" />
-
-				<p:commandButton style="margin:5px;" value="#{txtG.addToSC}"
-					action="#{towarListBB.doKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
-					
-				<p:commandButton style="margin:5px;" value="#{txtG.edit}"
-					action="#{towarListBB.edytujTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
-					
-				<p:commandButton value="#{txtG.del}"
-					action="#{towarListBB.usunProdukt(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
-
-			</p:column>
-
-		</p:dataTable>
+			<p:dataTable var="t" value="#{towarListBB.lazyModel}" paginator="true" rows="10"
+	                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	                     rowsPerPageTemplate="5,10,15" lazy="true" id="towar">
+	
+				<p:column priority="5">
+					<f:facet name="header">
+						<h:outputText value="#{txtG.prod}" />
+					</f:facet>
+					<h:outputText value="#{t.producent}" />
+				</p:column>
+	
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{txtG.mo}" />
+					</f:facet>
+					<h:outputText value="#{t.model}" />
+				</p:column>
+	
+				<p:column styleClass="centeredColumnContent">
+					<f:facet name="header">
+						<h:outputText value="#{txtG.opt}" />
+					</f:facet>
+	
+					<p:commandButton value="#{txtG.det}" 
+						action="#{towarListBB.szczegTowar(t)}" />
+	
+					<p:commandButton style="margin:5px;" value="#{txtG.addToSC}"
+						action="#{towarListBB.doKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+						
+					<p:commandButton style="margin:5px;" value="#{txtG.edit}"
+						action="#{towarListBB.edytujTowar(t)}" rendered="#{remoteClient.isInRole('admin')}"/>
+						
+					<p:commandButton value="#{txtG.del}"
+						action="#{towarListBB.usunProdukt(t)}"  rendered="#{remoteClient.isInRole('admin')}"/>
+	
+				</p:column>
+	
+			</p:dataTable>
 	</h:form>
 	</ui:define>
 	

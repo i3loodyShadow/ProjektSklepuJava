@@ -11,11 +11,12 @@
 		<ui:define name="pageContent">
 		
 			<h:form>
+			
 				<p:messages id="messages" showDetail="true" closable="true">
             		<p:autoUpdate/>
         		</p:messages>
+        		
 				<div>
-
 					    <p:panelGrid columns="2" layout="grid"
 					                 styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 					                 
@@ -32,9 +33,10 @@
 								<f:selectItem itemValue="#{null}" itemLabel="#{txtA.chooseOne}" />
 								<f:selectItems value="#{dodawanieTowaruBB.list}" var="grupaTowarow" itemLabel="#{grupaTowarow}" itemValue="#{grupaTowarow}"/>
 							</p:selectOneMenu>
-							
-					        <p:commandButton id="submit" value="#{txtA.add}" action="#{dodawanieTowaruBB.dodajProdukt()}"/>
-					        
+										        
+					    </p:panelGrid>
+					    <p:panelGrid columns="1" layout="grid" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+					    	<p:commandButton id="submit" value="#{txtA.add}" action="#{dodawanieTowaruBB.dodajProdukt()}"/>
 					    </p:panelGrid>
 				</div>
 			
