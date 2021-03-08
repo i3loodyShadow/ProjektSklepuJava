@@ -28,6 +28,7 @@
 /javax.faces.resource : PUBLIC;
 /public : PUBLIC;
 /pages : admin;
+/pages/user : user, admin;
 /pages/admin : admin;
 			</param-value>
 			

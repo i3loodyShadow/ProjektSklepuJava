@@ -76,7 +76,6 @@ public class DodawanieTowaruBB {
 	}
 	
 	public void dodajProdukt() {
-				
 		GrupyTowarow g = grupyTowarowDAO.getGTByName(wybranaGrupaTowarow);
 		Towar t = towarDAO.stworzTowar(producent, model, g);
 		

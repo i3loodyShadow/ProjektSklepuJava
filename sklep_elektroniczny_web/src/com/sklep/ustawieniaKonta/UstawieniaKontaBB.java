@@ -25,7 +25,7 @@ import com.sklep.entities.Zamowienie;
 @RequestScoped
 public class UstawieniaKontaBB {
 	
-	private static final String PAGE_SETTINGS = "/public/ustawieniaKonta?faces-redirect=true";
+	private static final String PAGE_SETTINGS = "/pages/user/ustawieniaKonta?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/public/login";
 	
 	@EJB

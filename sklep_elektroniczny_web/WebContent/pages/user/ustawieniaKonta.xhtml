@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+		 <p:growl id="message" showDetail="true"/>
+		
+		<h:form>
+			
+				<div>
+		    			<p:panelGrid id="email" columns="3" layout="grid"
+		                 	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+		                 	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+		                 	
+		                 	<p:row styleClass="my-heading-row">
+            					#{txtUIN.chEmail}
+       	 					</p:row>
+       	 					            	
+       	 					<p:row>&nbsp;</p:row>
+       	 					
+       	 					<p:row>&nbsp;</p:row>
+		                 	
+		                 	<p:outputLabel for="nowyEmail" value="#{txtUIN.typeNE}" />
+        					<p:inputText id="nowyEmail" value="#{ustawieniaKontaBB.nowyEmail}" required="true" requiredMessage="#{txtUIN.errEmailReq}" label="Email 1"
+        						match="nowyEmailPowt" validatorMessage="#{txtUIN.errEmailMsg}"/>
+        					<p:message for="nowyEmail"/>
+			        				
+			        		
+			        		<p:outputLabel for="nowyEmailPowt" value="#{txtUIN.typeNEIA}" />
+			        		<p:inputText id="nowyEmailPowt" value="#{ustawieniaKontaBB.nowyEmailPowt}" required="true" requiredMessage="#{txtUIN.errEmailAReq}" label="Email 2"/>
+			        		<p:message for="nowyEmailPowt"/> 
+			        		
+			        		<p:outputLabel for="staryEmail" value="#{txtUIN.typeOEI}"/>
+			        		<p:inputText id="staryEmail" value="#{ustawieniaKontaBB.staryEmail}" required="true" requiredMessage="#{txtUIN.errOEmailReq}"/>   
+			        		<p:message for="staryEmail" />
+
+							<p:row>&nbsp;</p:row>
+							
+			       			<p:commandButton id="submitEmail" value="#{txtUIN.chaEmail}" action="#{ustawieniaKontaBB.zmienEmail()}" update="email mess"/>	
+		       			
+		   				</p:panelGrid>
+		   				
+				</div>
+		
+		</h:form>
+		
+		&nbsp;
+		
+		<h:form>
+				
+				<div>
+		    			<p:panelGrid id="haslo" columns="3" layout="grid"
+		                 	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+		                 	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+		                 	
+		                 	<p:row styleClass="my-heading-row">
+            					#{txtUIN.chPass}
+       	 					</p:row>
+       	 					            	
+       	 					<p:row>&nbsp;</p:row>
+       	 					
+       	 					<p:row>&nbsp;</p:row>
+       	 					            	
+			        		<p:outputLabel for="noweHaslo" value="#{txtUIN.newPass}"/>
+			        		<p:password id="noweHaslo" value="#{ustawieniaKontaBB.noweHaslo}" required="true" requiredMessage="#{txtUIN.errNPassReq}" 
+			        			match="noweHasloPowt" validatorMessage="#{txtUIN.errNPassMsg}"/>
+			        		<p:message for="noweHaslo" />     		
+			
+			        		<p:outputLabel for="noweHasloPowt" value="#{txtUIN.repPass}"/>
+			        		<p:password id="noweHasloPowt" required="true" requiredMessage="#{txtUIN.errRepPassReq}"/>       
+			        		<p:message for="noweHasloPowt" />
+			        		
+			        		<p:outputLabel for="stareHaslo" value="#{txtUIN.oldPass}"/>
+			        		<p:password id="stareHaslo" value="#{ustawieniaKontaBB.stareHaslo}" required="true" requiredMessage="#{txtUIN.errOldPassReq}"/>   
+			        		<p:message for="stareHaslo" />	 		
+			        		
+							<p:row>&nbsp;</p:row>
+							
+			       			<p:commandButton id="submitHaslo" value="#{txtUIN.chPass}" action="#{ustawieniaKontaBB.zmienHaslo()}" update="haslo mess"/>
+			       			
+						</p:panelGrid>
+		   				
+				</div>
+		
+		</h:form>
+			
+		&nbsp;
+			
+		<h:form>
+		
+			<div>
+		    			<p:panelGrid id="konto" columns="1" layout="grid"
+		                 	columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+		                 	styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+		                 	
+		                 	<p:row styleClass="my-heading-row">
+            					#{txtUIN.delAcc}
+       	 					</p:row>
+       	 					
+			       			<p:commandButton onclick="return confirm('#{txtUIN.confirm}')" 
+			       				value="#{txtUIN.delAccButton}" action="#{ustawieniaKontaBB.usunKonto}" styleClass="ui-button-danger"/>
+   			
+						</p:panelGrid>
+		   				
+				</div>
+				
+		</h:form>
+		
+		<p:messages id="mess" showDetail="true" closable="true">
+        			<p:autoUpdate/>
+    	</p:messages>
+    	
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>

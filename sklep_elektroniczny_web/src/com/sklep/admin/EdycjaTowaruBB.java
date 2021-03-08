@@ -134,9 +134,9 @@ public class EdycjaTowaruBB implements Serializable {
 	public void zapiszSzczeg() {
 		List <WartoscParametrow> listWP = towar.getWartoscParametrows();
 		GrupyTowarow g = towar.getGrupyTowarow();
-		List<NazwaParametrow> npl = g.getNazwaParametrows();
+		List<NazwaParametrow> listNP = g.getNazwaParametrows();
 		
-		if (listWP.size()==npl.size()){
+		if (listWP.size()==listNP.size()){
 			for (int i=0; i<listWP.size(); i++) {
 				NazwaParametrow nazwaP = listWP.get(i).getNazwaParametrow();
 				

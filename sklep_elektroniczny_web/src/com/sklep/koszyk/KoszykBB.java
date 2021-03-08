@@ -31,7 +31,7 @@ import com.sklep.lazy.LazyTowarZamowieniaDataModel;
 public class KoszykBB implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_KOSZYK = "/public/koszyk?faces-redirect=true";
+	private static final String PAGE_KOSZYK = "/pages/user/koszyk?faces-redirect=true";
 	
 	private String prod;
 	private String mod;

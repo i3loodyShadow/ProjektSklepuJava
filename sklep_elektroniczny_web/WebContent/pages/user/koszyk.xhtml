@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:composition template="/templates/page-template.xhtml">
+		
+		<ui:define name="pageContent">
+		
+			<h:form id="koszyk" style ="margin-left: 3.5em; margin-right: 3.5em;">
+	
+				<p:dataTable value="#{koszykBB.lazyModel}" var="t" paginator="true" rows="10"
+		                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+		                     rowsPerPageTemplate="5,10,15" lazy="true">
+						<f:facet name="header">
+							<h:outputText value="#{txtUIN.inSC}" />
+						</f:facet>
+					
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="#{txtUIN.man}" />
+						</f:facet>
+					<h:outputText value="#{t.producent}" />
+					</p:column>
+		
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{txtUIN.mo}" />
+						</f:facet>
+					<h:outputText value="#{t.model}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{txtUIN.price}" />
+						</f:facet>
+					<h:outputText value="#{t.cena} #{txtUIN.pln}" />
+					</p:column>
+					
+					<p:column styleClass="centeredColumnContent">
+						<f:facet name="header">
+							<h:outputText value="#{txtUIN.options}" />
+						</f:facet>
+		
+						<p:commandButton style="margin:5px;" value="#{txtUIN.deleteFSC}"
+							action="#{koszykBB.usunZKoszyka(t)}" rendered="#{remoteClient.isInRole('user')}"/>
+		
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		
+			&nbsp;
+		
+    		<p:panel header="#{txtUIN.am}" >
+        		<h:outputText value="#{koszykBB.getK()} #{txtUIN.pln}" />
+    		</p:panel>
+    		
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>
